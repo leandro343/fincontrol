@@ -1,6 +1,8 @@
-# Variáveis de ambiente
-.env
+# Variáveis de ambiente internas
 **/.env
+
+# Permite somente o .env da raiz para o Docker Compose
+!/.env
 
 # Dependências do Node
 node_modules/
