@@ -14,5 +14,33 @@ services:
       - mysql_data:/var/lib/mysql
       - ./database:/docker-entrypoint-initdb.d
 
+  backend:
+    build:
+      context: ./backend
+    container_name: fincontrol-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: database
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_PORT: 3306
+      PORT: 3000
+      JWT_SECRET: fincontrol_chave_secreta_2026
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fincontrol-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
 volumes:
   mysql_data:
