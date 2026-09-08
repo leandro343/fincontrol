@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -10,22 +11,33 @@ function App() {
   const [emailEdicao, setEmailEdicao] = useState("");
   const [mensagem, setMensagem] = useState("");
 
+  function formatarData(data) {
+    if (!data) {
+      return "-";
+    }
+
+    return new Date(data).toLocaleDateString("pt-BR");
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     setMensagem("");
 
     try {
-      const resposta = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email,
-          senha
-        })
-      });
+      const resposta = await fetch(
+        "http://localhost:3000/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email,
+            senha
+          })
+        }
+      );
 
       const dados = await resposta.json();
 
@@ -74,17 +86,20 @@ function App() {
     setMensagem("");
 
     try {
-      const resposta = await fetch("http://localhost:3000/api/usuarios", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          nome,
-          email,
-          senha
-        })
-      });
+      const resposta = await fetch(
+        "http://localhost:3000/api/usuarios",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            nome,
+            email,
+            senha
+          })
+        }
+      );
 
       const dados = await resposta.json();
 
@@ -95,7 +110,9 @@ function App() {
         setEmail("");
         setSenha("");
 
-        setMensagem("Usuário cadastrado com sucesso! Faça o login.");
+        setMensagem(
+          "Usuário cadastrado com sucesso! Faça o login."
+        );
 
         setTelaCadastro(false);
       } else {
@@ -216,190 +233,445 @@ function App() {
   return (
     <>
       {usuario ? (
-        <div>
-          <h1>FinControl</h1>
-
-          <h2>Meu Perfil</h2>
-
-          <form onSubmit={handleAtualizarPerfil}>
-            <div>
-              <label htmlFor="nomeEdicao">Nome</label>
-              <br />
-
-              <input
-                type="text"
-                id="nomeEdicao"
-                value={nomeEdicao}
-                onChange={(event) => setNomeEdicao(event.target.value)}
-              />
+        <div className="profile-page">
+          <aside className="sidebar">
+            <div className="sidebar-logo">
+              Fin<span>Control</span>
             </div>
 
-            <br />
+            <nav className="sidebar-nav">
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">⌂</span>
+                Dashboard
+              </button>
 
-            <div>
-              <label htmlFor="emailEdicao">E-mail</label>
-              <br />
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">↑</span>
+                Receitas
+              </button>
 
-              <input
-                type="email"
-                id="emailEdicao"
-                value={emailEdicao}
-                onChange={(event) => setEmailEdicao(event.target.value)}
-              />
-            </div>
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">↓</span>
+                Despesas
+              </button>
 
-            <br />
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">□</span>
+                Categorias
+              </button>
 
-            <button type="submit">
-              Salvar alterações
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">◎</span>
+                Metas Financeiras
+              </button>
+
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-disabled"
+              >
+                <span className="sidebar-icon">▥</span>
+                Relatórios
+              </button>
+
+              <button
+                type="button"
+                className="sidebar-item sidebar-item-active"
+              >
+                <span className="sidebar-icon">○</span>
+                Perfil
+              </button>
+            </nav>
+
+            <button
+              type="button"
+              className="sidebar-item sidebar-logout"
+              onClick={handleLogout}
+            >
+              <span className="sidebar-icon">↪</span>
+              Sair
             </button>
-          </form>
+          </aside>
 
-          {mensagem && (
-            <p>{mensagem}</p>
-          )}
+          <main className="profile-main">
+            <header className="profile-topbar">
+              <button
+                type="button"
+                className="menu-button"
+                aria-label="Menu"
+              >
+                ☰
+              </button>
 
-          <br />
+              <div className="topbar-user">
+                <div className="topbar-avatar">
+                  {usuario.nome
+                    ? usuario.nome.charAt(0).toUpperCase()
+                    : "U"}
+                </div>
 
-          <button onClick={handleLogout}>
-            Sair
-          </button>
+                <span>
+                  Olá, {usuario.nome.split(" ")[0]}!
+                </span>
+              </div>
+            </header>
 
-          <br />
-          <br />
+            <section className="profile-content">
+              <div className="profile-heading">
+                <h1>Meu Perfil</h1>
 
-          <button onClick={handleExcluirConta}>
-            Excluir conta
-          </button>
+                <p>
+                  Gerencie suas informações pessoais e dados da conta.
+                </p>
+              </div>
+
+              <div className="profile-summary-card">
+                <div className="profile-user-summary">
+                  <div className="profile-avatar">
+                    {usuario.nome
+                      ? usuario.nome.charAt(0).toUpperCase()
+                      : "U"}
+                  </div>
+
+                  <div>
+                    <h2>{usuario.nome}</h2>
+
+                    <p>{usuario.email}</p>
+                  </div>
+                </div>
+
+                <div className="profile-summary-divider" />
+
+                <div className="profile-date">
+                  <span className="summary-icon">▣</span>
+
+                  <p>Data de Cadastro</p>
+
+                  <strong>
+                    {formatarData(usuario.created_at)}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="profile-grid">
+                <section className="profile-card">
+                  <div className="profile-card-title">
+                    <span className="card-title-icon">○</span>
+
+                    <h2>Informações Pessoais</h2>
+                  </div>
+
+                  <form
+                    onSubmit={handleAtualizarPerfil}
+                    className="profile-form"
+                  >
+                    <div className="profile-form-grid">
+                      <div className="form-group">
+                        <label htmlFor="nomeEdicao">
+                          Nome Completo
+                        </label>
+
+                        <input
+                          type="text"
+                          id="nomeEdicao"
+                          value={nomeEdicao}
+                          onChange={(event) =>
+                            setNomeEdicao(event.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="emailEdicao">
+                          E-mail
+                        </label>
+
+                        <input
+                          type="email"
+                          id="emailEdicao"
+                          value={emailEdicao}
+                          onChange={(event) =>
+                            setEmailEdicao(event.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    {mensagem && (
+                      <p className="profile-message">
+                        {mensagem}
+                      </p>
+                    )}
+
+                    <div className="profile-form-actions">
+                      <button
+                        type="submit"
+                        className="save-profile-button"
+                      >
+                        Salvar Alterações
+                      </button>
+                    </div>
+                  </form>
+                </section>
+
+                <section className="account-card">
+                  <div className="profile-card-title">
+                    <span className="danger-title-icon">
+                      !
+                    </span>
+
+                    <h2>Conta</h2>
+                  </div>
+
+                  <p className="account-text">
+                    Você pode excluir permanentemente sua conta
+                    e seus dados do FinControl.
+                  </p>
+
+                  <button
+                    type="button"
+                    className="delete-account-button"
+                    onClick={handleExcluirConta}
+                  >
+                    Excluir conta
+                  </button>
+                </section>
+              </div>
+            </section>
+          </main>
         </div>
       ) : telaCadastro ? (
-        <div>
-          <h1>FinControl</h1>
+        <div className="auth-page">
+          <div className="auth-wrapper">
+            <div className="auth-brand-panel">
+              <div>
+                <h1 className="brand-logo">
+                  FinControl
+                </h1>
 
-          <h2>Cadastro</h2>
+                <h2 className="brand-title">
+                  Comece agora sua jornada.
+                </h2>
 
-          <form onSubmit={handleCadastro}>
-            <div>
-              <label htmlFor="nome">Nome</label>
-              <br />
+                <p className="brand-text">
+                  Crie sua conta e tenha mais controle
+                  sobre suas finanças de forma simples
+                  e segura.
+                </p>
+              </div>
 
-              <input
-                type="text"
-                id="nome"
-                value={nome}
-                onChange={(event) => setNome(event.target.value)}
-                placeholder="Digite seu nome"
-              />
+              <p className="brand-footer">
+                Planejamento hoje, resultados amanhã.
+              </p>
             </div>
 
-            <br />
+            <div className="auth-form-panel">
+              <div className="auth-form-content">
+                <h2 className="auth-title">
+                  Criar sua conta
+                </h2>
 
-            <div>
-              <label htmlFor="emailCadastro">E-mail</label>
-              <br />
+                <p className="auth-subtitle">
+                  Preencha os dados abaixo para se cadastrar.
+                </p>
 
-              <input
-                type="email"
-                id="emailCadastro"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Digite seu e-mail"
-              />
+                <form onSubmit={handleCadastro}>
+                  <div className="form-group">
+                    <label htmlFor="nome">
+                      Nome
+                    </label>
+
+                    <input
+                      type="text"
+                      id="nome"
+                      value={nome}
+                      onChange={(event) =>
+                        setNome(event.target.value)
+                      }
+                      placeholder="Digite seu nome"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="emailCadastro">
+                      E-mail
+                    </label>
+
+                    <input
+                      type="email"
+                      id="emailCadastro"
+                      value={email}
+                      onChange={(event) =>
+                        setEmail(event.target.value)
+                      }
+                      placeholder="Digite seu e-mail"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="senhaCadastro">
+                      Senha
+                    </label>
+
+                    <input
+                      type="password"
+                      id="senhaCadastro"
+                      value={senha}
+                      onChange={(event) =>
+                        setSenha(event.target.value)
+                      }
+                      placeholder="Digite sua senha"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="primary-button"
+                  >
+                    Cadastrar
+                  </button>
+                </form>
+
+                {mensagem && (
+                  <p className="message">
+                    {mensagem}
+                  </p>
+                )}
+
+                <div className="auth-switch">
+                  <p>
+                    Já possui uma conta?
+                  </p>
+
+                  <button
+                    type="button"
+                    className="link-button"
+                    onClick={() => {
+                      setTelaCadastro(false);
+                      setMensagem("");
+                    }}
+                  >
+                    Voltar ao login
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <br />
-
-            <div>
-              <label htmlFor="senhaCadastro">Senha</label>
-              <br />
-
-              <input
-                type="password"
-                id="senhaCadastro"
-                value={senha}
-                onChange={(event) => setSenha(event.target.value)}
-                placeholder="Digite sua senha"
-              />
-            </div>
-
-            <br />
-
-            <button type="submit">
-              Cadastrar
-            </button>
-          </form>
-
-          {mensagem && (
-            <p>{mensagem}</p>
-          )}
-
-          <br />
-
-          <button
-            onClick={() => {
-              setTelaCadastro(false);
-              setMensagem("");
-            }}
-          >
-            Voltar para Login
-          </button>
+          </div>
         </div>
       ) : (
-        <div>
-          <h1>FinControl</h1>
+        <div className="auth-page">
+          <div className="auth-wrapper">
+            <div className="auth-brand-panel">
+              <div>
+                <h1 className="brand-logo">
+                  FinControl
+                </h1>
 
-          <h2>Login</h2>
+                <h2 className="brand-title">
+                  Mais controle para suas finanças.
+                </h2>
 
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email">E-mail</label>
-              <br />
+                <p className="brand-text">
+                  Organize, acompanhe e tome melhores
+                  decisões para sua vida financeira.
+                </p>
+              </div>
 
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Digite seu e-mail"
-              />
+              <p className="brand-footer">
+                Planejamento hoje, resultados amanhã.
+              </p>
             </div>
 
-            <br />
+            <div className="auth-form-panel">
+              <div className="auth-form-content">
+                <h2 className="auth-title">
+                  Bem-vindo(a)!
+                </h2>
 
-            <div>
-              <label htmlFor="senha">Senha</label>
-              <br />
+                <p className="auth-subtitle">
+                  Faça seu login para acessar o FinControl.
+                </p>
 
-              <input
-                type="password"
-                id="senha"
-                value={senha}
-                onChange={(event) => setSenha(event.target.value)}
-                placeholder="Digite sua senha"
-              />
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="email">
+                      E-mail
+                    </label>
+
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(event) =>
+                        setEmail(event.target.value)
+                      }
+                      placeholder="Digite seu e-mail"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="senha">
+                      Senha
+                    </label>
+
+                    <input
+                      type="password"
+                      id="senha"
+                      value={senha}
+                      onChange={(event) =>
+                        setSenha(event.target.value)
+                      }
+                      placeholder="Digite sua senha"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="primary-button"
+                  >
+                    Entrar
+                  </button>
+                </form>
+
+                {mensagem && (
+                  <p className="message">
+                    {mensagem}
+                  </p>
+                )}
+
+                <div className="auth-switch">
+                  <p>
+                    Não possui uma conta?
+                  </p>
+
+                  <button
+                    type="button"
+                    className="link-button"
+                    onClick={() => {
+                      setTelaCadastro(true);
+                      setMensagem("");
+                    }}
+                  >
+                    Criar conta
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <br />
-
-            <button type="submit">
-              Entrar
-            </button>
-          </form>
-
-          {mensagem && (
-            <p>{mensagem}</p>
-          )}
-
-          <p>Não possui uma conta?</p>
-
-          <button
-            onClick={() => {
-              setTelaCadastro(true);
-              setMensagem("");
-            }}
-          >
-            Criar conta
-          </button>
+          </div>
         </div>
       )}
     </>
