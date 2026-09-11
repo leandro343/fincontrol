@@ -1,40 +1,43 @@
 services:
   database:
-    image: mysql:8.4
+    image: leandro343/fincontrol-database:latest
     container_name: fincontrol-database
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: fincontrol
+      MYSQL_USER: fincontrol_user
+      MYSQL_PASSWORD: fincontrol123
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -P 3306 -uroot -proot123 --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   backend:
-    build:
-      context: ./backend
+    image: leandro343/fincontrol-backend:latest
     container_name: fincontrol-backend
     restart: unless-stopped
     environment:
       DB_HOST: database
-      DB_USER: ${MYSQL_USER}
-      DB_PASSWORD: ${MYSQL_PASSWORD}
-      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: fincontrol_user
+      DB_PASSWORD: fincontrol123
+      DB_NAME: fincontrol
       DB_PORT: 3306
       PORT: 3000
       JWT_SECRET: fincontrol_chave_secreta_2026
     ports:
       - "3000:3000"
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
   frontend:
-    build:
-      context: ./frontend
+    image: leandro343/fincontrol-frontend:latest
     container_name: fincontrol-frontend
     restart: unless-stopped
     ports:
