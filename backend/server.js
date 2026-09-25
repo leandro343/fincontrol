@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const usuarioRoutes = require("./routes/usuarioRoutes");
-const authRoutes = require("./routes/authRoutes");  
+const authRoutes = require("./routes/authRoutes");
+const categoriaRoutes = require("./routes/categoriaRoutes");
 require("dotenv").config();
 const pool = require("./config/db");
 
@@ -9,8 +10,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/categorias", categoriaRoutes);
 
 app.get("/", (req, res) => {
   res.json({
