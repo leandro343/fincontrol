@@ -3,6 +3,7 @@ const cors = require("cors");
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const authRoutes = require("./routes/authRoutes");
 const categoriaRoutes = require("./routes/categoriaRoutes");
+const contaContabilRoutes = require("./routes/contaContabilRoutes");
 require("dotenv").config();
 const pool = require("./config/db");
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/categorias", categoriaRoutes);
+app.use("/api/contas-contabeis", contaContabilRoutes);
 
 app.get("/", (req, res) => {
   res.json({
@@ -22,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
 async function testarConexao() {
   try {
     const connection = await pool.getConnection();
@@ -33,6 +36,7 @@ async function testarConexao() {
 }
 
 testarConexao();
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
