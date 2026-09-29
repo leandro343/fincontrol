@@ -297,6 +297,7 @@ async function excluirContaContabil(req, res) {
     const { id } = req.params;
     const usuarioId = req.usuario.id;
 
+    // Verifica se a conta pertence ao usuário
     const [contas] = await pool.query(
       `SELECT id
        FROM contas_contabeis
@@ -310,6 +311,23 @@ async function excluirContaContabil(req, res) {
       });
     }
 
+    // Verifica se existem movimentações vinculadas
+    const [movimentacoes] = await pool.query(
+      `SELECT id
+       FROM movimentacoes_financeiras
+       WHERE conta_id = ?
+       LIMIT 1`,
+      [id]
+    );
+
+    if (movimentacoes.length > 0) {
+      return res.status(409).json({
+        mensagem:
+          "Esta conta possui movimentações vinculadas e não pode ser excluída. Você pode inativá-la, se preferir."
+      });
+    }
+
+    // Sem movimentações, a exclusão é permitida
     await pool.query(
       `DELETE FROM contas_contabeis
        WHERE id = ? AND usuario_id = ?`,
@@ -328,7 +346,6 @@ async function excluirContaContabil(req, res) {
     });
   }
 }
-
 module.exports = {
   cadastrarContaContabil,
   listarContasContabeis,

@@ -1,5 +1,18 @@
 import { useState } from "react";
 import "./App.css";
+import Categorias from "./pages/Categorias";
+import Contas from "./pages/Contas";
+import {
+  LayoutDashboard,
+  WalletCards,
+  ArrowRightLeft,
+  Tags,
+  Target,
+  ChartNoAxesCombined,
+  UserRound,
+  LogOut,
+  Menu
+} from "lucide-react";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -10,6 +23,7 @@ function App() {
   const [nomeEdicao, setNomeEdicao] = useState("");
   const [emailEdicao, setEmailEdicao] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const [paginaAtual, setPaginaAtual] = useState("perfil");
 
   function formatarData(data) {
     if (!data) {
@@ -235,76 +249,109 @@ function App() {
       {usuario ? (
         <div className="profile-page">
           <aside className="sidebar">
-            <div className="sidebar-logo">
-              Fin<span>Control</span>
+            <div className="sidebar-brand">
+              <div className="sidebar-logo">
+                Fin<span>Control</span>
+              </div>
+
+              <p className="sidebar-brand-subtitle">
+                Controle Financeiro
+              </p>
             </div>
 
             <nav className="sidebar-nav">
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">⌂</span>
-                Dashboard
-              </button>
+              <div className="sidebar-section">
+                <span className="sidebar-section-title">Visão Geral</span>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">↑</span>
-                Receitas
-              </button>
+                <button
+                  type="button"
+                  className="sidebar-item sidebar-item-disabled"
+                >
+                  <LayoutDashboard className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Dashboard</span>
+                </button>
+              </div>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">↓</span>
-                Despesas
-              </button>
+              <div className="sidebar-section">
+                <span className="sidebar-section-title">Finanças</span>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">□</span>
-                Categorias
-              </button>
+                <button
+  type="button"
+  className={`sidebar-item ${
+    paginaAtual === "contas" ? "sidebar-item-active" : ""
+  }`}
+  onClick={() => setPaginaAtual("contas")}
+>
+  <WalletCards
+    className="sidebar-icon"
+    size={19}
+    strokeWidth={1.8}
+  />
+  <span>Contas</span>
+</button>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">◎</span>
-                Metas Financeiras
-              </button>
+                <button
+                  type="button"
+                  className="sidebar-item sidebar-item-disabled"
+                >
+                  <ArrowRightLeft className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Movimentações</span>
+                </button>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-disabled"
-              >
-                <span className="sidebar-icon">▥</span>
-                Relatórios
-              </button>
+                <button
+                  type="button"
+                  className={`sidebar-item ${
+                    paginaAtual === "categorias" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("categorias")}
+                >
+                  <Tags className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Categorias</span>
+                </button>
 
-              <button
-                type="button"
-                className="sidebar-item sidebar-item-active"
-              >
-                <span className="sidebar-icon">○</span>
-                Perfil
-              </button>
+                <button
+                  type="button"
+                  className="sidebar-item sidebar-item-disabled"
+                >
+                  <Target className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Metas Financeiras</span>
+                </button>
+              </div>
+
+              <div className="sidebar-section">
+                <span className="sidebar-section-title">Análises</span>
+
+                <button
+                  type="button"
+                  className="sidebar-item sidebar-item-disabled"
+                >
+                  <ChartNoAxesCombined className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Relatórios</span>
+                </button>
+              </div>
             </nav>
 
-            <button
-              type="button"
-              className="sidebar-item sidebar-logout"
-              onClick={handleLogout}
-            >
-              <span className="sidebar-icon">↪</span>
-              Sair
-            </button>
+            <div className="sidebar-footer">
+              <button
+                type="button"
+                className={`sidebar-item ${
+                  paginaAtual === "perfil" ? "sidebar-item-active" : ""
+                }`}
+                onClick={() => setPaginaAtual("perfil")}
+              >
+                <UserRound className="sidebar-icon" size={19} strokeWidth={1.8} />
+                <span>Perfil</span>
+              </button>
+
+              <button
+                type="button"
+                className="sidebar-item sidebar-logout"
+                onClick={handleLogout}
+              >
+                <LogOut className="sidebar-icon" size={19} strokeWidth={1.8} />
+                <span>Sair</span>
+              </button>
+            </div>
           </aside>
 
           <main className="profile-main">
@@ -314,7 +361,7 @@ function App() {
                 className="menu-button"
                 aria-label="Menu"
               >
-                ☰
+                <Menu size={22} strokeWidth={2} />
               </button>
 
               <div className="topbar-user">
@@ -330,127 +377,135 @@ function App() {
               </div>
             </header>
 
-            <section className="profile-content">
-              <div className="profile-heading">
-                <h1>Meu Perfil</h1>
+              <section className="profile-content">
+  {paginaAtual === "categorias" ? (
+    <Categorias />
+  ) : paginaAtual === "contas" ? (
+    <Contas />
+  ) : (
+    <>
+                  <div className="profile-heading">
+                    <h1>Meu Perfil</h1>
 
-                <p>
-                  Gerencie suas informações pessoais e dados da conta.
-                </p>
-              </div>
-
-              <div className="profile-summary-card">
-                <div className="profile-user-summary">
-                  <div className="profile-avatar">
-                    {usuario.nome
-                      ? usuario.nome.charAt(0).toUpperCase()
-                      : "U"}
+                    <p>
+                      Gerencie suas informações pessoais e dados da conta.
+                    </p>
                   </div>
 
-                  <div>
-                    <h2>{usuario.nome}</h2>
-
-                    <p>{usuario.email}</p>
-                  </div>
-                </div>
-
-                <div className="profile-summary-divider" />
-
-                <div className="profile-date">
-                  <span className="summary-icon">▣</span>
-
-                  <p>Data de Cadastro</p>
-
-                  <strong>
-                    {formatarData(usuario.created_at)}
-                  </strong>
-                </div>
-              </div>
-
-              <div className="profile-grid">
-                <section className="profile-card">
-                  <div className="profile-card-title">
-                    <span className="card-title-icon">○</span>
-
-                    <h2>Informações Pessoais</h2>
-                  </div>
-
-                  <form
-                    onSubmit={handleAtualizarPerfil}
-                    className="profile-form"
-                  >
-                    <div className="profile-form-grid">
-                      <div className="form-group">
-                        <label htmlFor="nomeEdicao">
-                          Nome Completo
-                        </label>
-
-                        <input
-                          type="text"
-                          id="nomeEdicao"
-                          value={nomeEdicao}
-                          onChange={(event) =>
-                            setNomeEdicao(event.target.value)
-                          }
-                        />
+                  <div className="profile-summary-card">
+                    <div className="profile-user-summary">
+                      <div className="profile-avatar">
+                        {usuario.nome
+                          ? usuario.nome.charAt(0).toUpperCase()
+                          : "U"}
                       </div>
 
-                      <div className="form-group">
-                        <label htmlFor="emailEdicao">
-                          E-mail
-                        </label>
+                      <div>
+                        <h2>{usuario.nome}</h2>
 
-                        <input
-                          type="email"
-                          id="emailEdicao"
-                          value={emailEdicao}
-                          onChange={(event) =>
-                            setEmailEdicao(event.target.value)
-                          }
-                        />
+                        <p>{usuario.email}</p>
                       </div>
                     </div>
 
-                    {mensagem && (
-                      <p className="profile-message">
-                        {mensagem}
-                      </p>
-                    )}
+                    <div className="profile-summary-divider" />
 
-                    <div className="profile-form-actions">
-                      <button
-                        type="submit"
-                        className="save-profile-button"
+                    <div className="profile-date">
+                      <span className="summary-icon">▣</span>
+
+                      <p>Data de Cadastro</p>
+
+                      <strong>
+                        {formatarData(usuario.created_at)}
+                      </strong>
+                    </div>
+                  </div>
+
+                  <div className="profile-grid">
+                    <section className="profile-card">
+                      <div className="profile-card-title">
+                        <span className="card-title-icon">○</span>
+
+                        <h2>Informações Pessoais</h2>
+                      </div>
+
+                      <form
+                        onSubmit={handleAtualizarPerfil}
+                        className="profile-form"
                       >
-                        Salvar Alterações
+                        <div className="profile-form-grid">
+                          <div className="form-group">
+                            <label htmlFor="nomeEdicao">
+                              Nome Completo
+                            </label>
+
+                            <input
+                              type="text"
+                              id="nomeEdicao"
+                              value={nomeEdicao}
+                              onChange={(event) =>
+                                setNomeEdicao(event.target.value)
+                              }
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label htmlFor="emailEdicao">
+                              E-mail
+                            </label>
+
+                            <input
+                              type="email"
+                              id="emailEdicao"
+                              value={emailEdicao}
+                              onChange={(event) =>
+                                setEmailEdicao(event.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        {mensagem && (
+                          <p className="profile-message">
+                            {mensagem}
+                          </p>
+                        )}
+
+                        <div className="profile-form-actions">
+                          <button
+                            type="submit"
+                            className="save-profile-button"
+                          >
+                            Salvar Alterações
+                          </button>
+                        </div>
+                      </form>
+                    </section>
+
+                    <section className="account-card">
+                      <div className="profile-card-title">
+                        <span className="danger-title-icon">
+                          !
+                        </span>
+
+                        <h2>Conta</h2>
+                      </div>
+
+                      <p className="account-text">
+                        Você pode excluir permanentemente sua conta
+                        e seus dados do FinControl.
+                      </p>
+
+                      <button
+                        type="button"
+                        className="delete-account-button"
+                        onClick={handleExcluirConta}
+                      >
+                        Excluir conta
                       </button>
-                    </div>
-                  </form>
-                </section>
-
-                <section className="account-card">
-                  <div className="profile-card-title">
-                    <span className="danger-title-icon">
-                      !
-                    </span>
-
-                    <h2>Conta</h2>
+                    </section>
                   </div>
-
-                  <p className="account-text">
-                    Você pode excluir permanentemente sua conta
-                    e seus dados do FinControl.
-                  </p>
-
-                  <button
-                    type="button"
-                    className="delete-account-button"
-                    onClick={handleExcluirConta}
-                  >
-                    Excluir conta
-                  </button>
-                </section>
-              </div>
+                </>
+              )}
             </section>
           </main>
         </div>

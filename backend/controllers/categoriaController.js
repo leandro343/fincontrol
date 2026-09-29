@@ -140,6 +140,21 @@ async function excluirCategoria(req, res) {
       });
     }
 
+    const [contasVinculadas] = await pool.query(
+      `SELECT id
+       FROM contas_contabeis
+       WHERE categoria_id = ? AND usuario_id = ?
+       LIMIT 1`,
+      [id, usuarioId]
+    );
+
+    if (contasVinculadas.length > 0) {
+      return res.status(409).json({
+        mensagem:
+          "Esta categoria possui contas vinculadas e não pode ser excluída."
+      });
+    }
+
     await pool.query(
       `DELETE FROM categorias
        WHERE id = ? AND usuario_id = ?`,
