@@ -4174,3 +4174,335 @@
   opacity: 0.65;
   cursor: not-allowed;
 }
+
+/* =========================================================
+   MOVIMENTAÇÕES - TABELA
+   ========================================================= */
+
+.transactions-page .categories-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.transactions-page .categories-table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+.transactions-page .categories-table th,
+.transactions-page .categories-table td {
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+/* Data */
+.transactions-page .categories-table th:nth-child(1),
+.transactions-page .categories-table td:nth-child(1) {
+  width: 12%;
+  white-space: nowrap;
+}
+
+/* Conta */
+.transactions-page .categories-table th:nth-child(2),
+.transactions-page .categories-table td:nth-child(2) {
+  width: 17%;
+}
+
+/* Categoria */
+.transactions-page .categories-table th:nth-child(3),
+.transactions-page .categories-table td:nth-child(3) {
+  width: 16%;
+}
+
+/* Tipo */
+.transactions-page .categories-table th:nth-child(4),
+.transactions-page .categories-table td:nth-child(4) {
+  width: 13%;
+  white-space: nowrap;
+}
+
+/* Valor */
+.transactions-page .categories-table th:nth-child(5),
+.transactions-page .categories-table td:nth-child(5) {
+  width: 16%;
+  white-space: nowrap;
+}
+
+/* Observação */
+.transactions-page .categories-table th:nth-child(6),
+.transactions-page .categories-table td:nth-child(6) {
+  width: 26%;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* =========================================================
+   MOVIMENTAÇÕES - RESUMO MENSAL
+   ========================================================= */
+
+.transactions-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.transactions-summary-card {
+  min-height: 112px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.transactions-summary-icon {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.transactions-summary-income {
+  color: #059669;
+  background: #dff7ed;
+}
+
+.transactions-summary-expense {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.transactions-summary-balance {
+  color: #2563eb;
+  background: #e8f1ff;
+}
+
+.transactions-summary-card > div:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.transactions-summary-card span {
+  margin-bottom: 4px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.transactions-summary-value {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.transactions-summary-value.income {
+  color: #059669;
+}
+
+.transactions-summary-value.expense {
+  color: #ef4444;
+}
+
+.transactions-summary-value.balance-positive {
+  color: #2563eb;
+}
+
+.transactions-summary-value.balance-negative {
+  color: #ef4444;
+}
+
+.transactions-summary-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .transactions-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOVIMENTAÇÕES - BUSCA E FILTROS
+   ========================================================= */
+
+.transactions-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.transactions-search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #64748b;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.transactions-search:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.transactions-search input {
+  width: 100%;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.transactions-search input::placeholder {
+  color: #94a3b8;
+}
+
+.transactions-search {
+  flex: 1;
+  width: auto;
+}
+
+.transactions-filter-select {
+  width: 180px;
+  height: 44px;
+  padding: 0 36px 0 13px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #334155;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.transactions-filter-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+@media (max-width: 800px) {
+  .transactions-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .transactions-filter-select {
+    width: 100%;
+  }
+}
+
+.transactions-filter-type {
+  width: 160px;
+}
+
+.transactions-filter-period {
+  width: 170px;
+}
+
+/* =========================================================
+   MOVIMENTAÇÕES - PAGINAÇÃO
+   ========================================================= */
+
+.transactions-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-top: 1px solid #edf1f6;
+  background: #ffffff;
+}
+
+.transactions-pagination p {
+  margin: 0;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.transactions-pagination p strong {
+  color: #334155;
+  font-weight: 700;
+}
+
+.transactions-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.transactions-pagination-controls span {
+  min-width: 58px;
+  color: #475569;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.transactions-pagination-controls button {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #dbe3ee;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.transactions-pagination-controls button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.transactions-pagination-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .transactions-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -75,6 +75,43 @@ async function registrarMovimentacao(req, res) {
   }
 }
 
+async function listarMovimentacoes(req, res) {
+  try {
+    const usuarioId = req.usuario.id;
+
+    const [movimentacoes] = await pool.query(
+      `SELECT
+         mf.id,
+         mf.conta_id,
+         cc.nome AS conta,
+         cc.tipo,
+         cc.natureza,
+         c.nome AS categoria,
+         mf.valor_realizado,
+         mf.data_movimentacao,
+         mf.observacao,
+         mf.created_at
+       FROM movimentacoes_financeiras mf
+       INNER JOIN contas_contabeis cc
+         ON cc.id = mf.conta_id
+       INNER JOIN categorias c
+         ON c.id = cc.categoria_id
+       WHERE cc.usuario_id = ?
+       ORDER BY mf.data_movimentacao DESC, mf.id DESC`,
+      [usuarioId]
+    );
+
+    return res.status(200).json(movimentacoes);
+  } catch (error) {
+    console.error("Erro ao listar movimentações financeiras:", error);
+
+    return res.status(500).json({
+      mensagem: "Erro interno do servidor."
+    });
+  }
+}
+
 module.exports = {
-  registrarMovimentacao
+  registrarMovimentacao,
+  listarMovimentacoes
 };

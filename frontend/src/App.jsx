@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Categorias from "./pages/Categorias";
 import Contas from "./pages/Contas";
+import Movimentacoes from "./pages/Movimentacoes";
 import {
   LayoutDashboard,
   WalletCards,
@@ -291,12 +292,21 @@ function App() {
 </button>
 
                 <button
-                  type="button"
-                  className="sidebar-item sidebar-item-disabled"
-                >
-                  <ArrowRightLeft className="sidebar-icon" size={19} strokeWidth={1.8} />
-                  <span>Movimentações</span>
-                </button>
+  type="button"
+  className={`sidebar-item ${
+    paginaAtual === "movimentacoes"
+      ? "sidebar-item-active"
+      : ""
+  }`}
+  onClick={() => setPaginaAtual("movimentacoes")}
+>
+  <ArrowRightLeft
+    className="sidebar-icon"
+    size={19}
+    strokeWidth={1.8}
+  />
+  <span>Movimentações</span>
+</button>
 
                 <button
                   type="button"
@@ -379,10 +389,12 @@ function App() {
 
               <section className="profile-content">
   {paginaAtual === "categorias" ? (
-    <Categorias />
-  ) : paginaAtual === "contas" ? (
-    <Contas />
-  ) : (
+  <Categorias />
+) : paginaAtual === "contas" ? (
+  <Contas />
+) : paginaAtual === "movimentacoes" ? (
+  <Movimentacoes />
+) : (
     <>
                   <div className="profile-heading">
                     <h1>Meu Perfil</h1>
