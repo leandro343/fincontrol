@@ -4506,3 +4506,167 @@
     align-items: flex-start;
   }
 }
+
+/* =========================================================
+   SPRINT 2 - PADRÃO VISUAL FINAL
+   Categorias | Contas | Movimentações
+   ========================================================= */
+
+/* Área útil */
+
+.profile-content:has(.categories-page),
+.profile-content:has(.accounts-page),
+.profile-content:has(.transactions-page) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 36px 64px 52px;
+  box-sizing: border-box;
+}
+
+/* Todas as páginas ocupam a área disponível */
+
+.categories-page,
+.accounts-page,
+.transactions-page {
+  width: 100%;
+  max-width: none;
+}
+
+/* Cabeçalho */
+
+.categories-page .categories-header,
+.accounts-page .categories-header,
+.transactions-page .categories-header {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.categories-page .categories-header h1,
+.accounts-page .categories-header h1,
+.transactions-page .categories-header h1 {
+  margin-bottom: 7px;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.categories-page .categories-header p,
+.accounts-page .categories-header p,
+.transactions-page .categories-header p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Cards principais */
+
+.categories-page .categories-list-card,
+.accounts-page .categories-list-card,
+.transactions-page .categories-list-card {
+  width: 100%;
+  max-width: none;
+}
+
+/* Cabeçalho interno dos cards */
+
+.categories-page .categories-list-header h2,
+.accounts-page .categories-list-header h2,
+.transactions-page .categories-list-header h2 {
+  font-size: 17px;
+}
+
+.categories-page .categories-list-header p,
+.accounts-page .categories-list-header p,
+.transactions-page .categories-list-header p {
+  font-size: 13px;
+}
+
+/* Tabelas */
+
+.categories-page .categories-table th,
+.accounts-page .categories-table th,
+.transactions-page .categories-table th {
+  font-size: 11px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.categories-page .categories-table td,
+.accounts-page .categories-table td,
+.transactions-page .categories-table td {
+  font-size: 14px;
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+
+/* Badges */
+
+.categories-page .category-badge,
+.accounts-page .category-badge,
+.transactions-page .category-badge {
+  font-size: 11px;
+}
+
+/* Botão principal */
+
+.categories-page .categories-new-button,
+.accounts-page .categories-new-button,
+.transactions-page .categories-new-button {
+  min-height: 44px;
+  padding-left: 18px;
+  padding-right: 18px;
+  font-size: 13px;
+}
+
+/* =========================================================
+   MOVIMENTAÇÕES - COMPACTAÇÃO VERTICAL DESKTOP
+   ========================================================= */
+
+.transactions-page .categories-header {
+  margin-bottom: 22px;
+}
+
+/* Cards de resumo */
+
+.transactions-page .transactions-summary {
+  margin-bottom: 20px;
+}
+
+.transactions-page .transactions-summary-card {
+  min-height: 102px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* Área de filtros */
+
+.transactions-page .transactions-filters {
+  margin-bottom: 16px;
+}
+
+/* Cabeçalho da tabela */
+
+.transactions-page .categories-list-header {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* Linhas da tabela */
+
+.transactions-page .categories-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.transactions-page .categories-table td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/* Paginação */
+
+.transactions-page .transactions-pagination {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
