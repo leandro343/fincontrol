@@ -4,6 +4,7 @@ import Categorias from "./pages/Categorias";
 import Contas from "./pages/Contas";
 import Movimentacoes from "./pages/Movimentacoes";
 import Dashboard from "./pages/Dashboard";
+import Relatorios from "./pages/Relatorios";
 import {
   LayoutDashboard,
   WalletCards,
@@ -333,7 +334,10 @@ function App() {
 
                 <button
                   type="button"
-                  className="sidebar-item sidebar-item-disabled"
+                  className={`sidebar-item ${
+                    paginaAtual === "relatorios" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("relatorios")}
                 >
                   <ChartNoAxesCombined
                     className="sidebar-icon"
@@ -390,6 +394,8 @@ function App() {
             <section className="profile-content">
               {paginaAtual === "dashboard" ? (
                 <Dashboard />
+              ) : paginaAtual === "relatorios" ? (
+                <Relatorios />
               ) : paginaAtual === "categorias" ? (
                 <Categorias />
               ) : paginaAtual === "contas" ? (

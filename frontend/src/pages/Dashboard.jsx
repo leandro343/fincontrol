@@ -1,4 +1,12 @@
 import { useEffect, useState } from "react";
+import {
+  TrendingUp,
+  TrendingDown,
+  Wallet,
+  Target,
+  ArrowUpRight,
+  ArrowDownRight,
+} from "lucide-react";
 import GraficoDespesas from "./GraficoDespesas";
 
 function formatarDataInput(data) {
@@ -162,93 +170,201 @@ function Dashboard() {
 ) : (
   <>
       <div className="dashboard-indicadores">
-        {/* Receitas realizadas */}
+                {/* Receitas realizadas */}
 
         <div className="dashboard-indicador">
-          <h2>Receitas realizadas</h2>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+            }}
+          >
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "50%",
+                backgroundColor: "#dcfce7",
+                color: "#16a34a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <TrendingUp size={24} strokeWidth={2} />
+            </div>
 
-          <p>
-            {dadosDashboard === null
-              ? "Carregando..."
-              : Number(dadosDashboard.receitas_realizadas).toLocaleString(
-                  "pt-BR",
-                  {
-                    style: "currency",
-                    currency: "BRL",
-                  },
-                )}
-          </p>
+            <div>
+              <h2>Receitas realizadas</h2>
+
+              <p>
+                {dadosDashboard === null
+                  ? "Carregando..."
+                  : Number(
+                      dadosDashboard.receitas_realizadas
+                    ).toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Despesas realizadas */}
 
         <div className="dashboard-indicador dashboard-indicador-despesas">
-          <h2>Despesas realizadas</h2>
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    }}
+  >
+    <div
+      style={{
+        width: "56px",
+        height: "56px",
+        borderRadius: "50%",
+        backgroundColor: "#fee2e2",
+        color: "#ef4444",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      <TrendingDown size={24} strokeWidth={2} />
+    </div>
 
-          <p>
-            {dadosDashboard === null
-              ? "Carregando..."
-              : Number(dadosDashboard.despesas_realizadas).toLocaleString(
-                  "pt-BR",
-                  {
-                    style: "currency",
-                    currency: "BRL",
-                  },
-                )}
-          </p>
-        </div>
+    <div>
+      <h2>Despesas realizadas</h2>
+
+      <p>
+        {dadosDashboard === null
+          ? "Carregando..."
+          : Number(
+              dadosDashboard.despesas_realizadas
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+      </p>
+    </div>
+  </div>
+</div>
 
         {/* Saldo realizado */}
 
         <div className="dashboard-indicador dashboard-indicador-saldo-realizado">
-          <h2>Saldo realizado</h2>
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    }}
+  >
+    <div
+      style={{
+        width: "56px",
+        height: "56px",
+        borderRadius: "50%",
+        backgroundColor: "#dbeafe",
+        color: "#2563eb",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      <Wallet size={24} strokeWidth={2} />
+    </div>
 
-          <p
-            style={{
-              color:
-                dadosDashboard === null
-                  ? "#64748b"
-                  : Number(dadosDashboard.saldo_realizado) > 0
-                    ? "#16a34a"
-                    : Number(dadosDashboard.saldo_realizado) < 0
-                      ? "#ef4444"
-                      : "#64748b",
-            }}
-          >
-            {dadosDashboard === null
-              ? "Carregando..."
-              : Number(dadosDashboard.saldo_realizado).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-          </p>
-        </div>
+    <div>
+      <h2>Saldo realizado</h2>
+
+      <p
+        style={{
+          color:
+            dadosDashboard === null
+              ? "#64748b"
+              : Number(dadosDashboard.saldo_realizado) > 0
+                ? "#16a34a"
+                : Number(dadosDashboard.saldo_realizado) < 0
+                  ? "#ef4444"
+                  : "#64748b",
+        }}
+      >
+        {dadosDashboard === null
+          ? "Carregando..."
+          : Number(dadosDashboard.saldo_realizado).toLocaleString(
+              "pt-BR",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            )}
+      </p>
+    </div>
+  </div>
+</div>
 
         {/* Saldo previsto */}
 
-        <div className="dashboard-indicador dashboard-indicador-saldo-previsto">
-          <h2>Saldo previsto</h2>
+<div className="dashboard-indicador dashboard-indicador-saldo-previsto">
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    }}
+  >
+    <div
+      style={{
+        width: "56px",
+        height: "56px",
+        borderRadius: "50%",
+        backgroundColor: "#f3e8ff",
+        color: "#9333ea",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      <Target size={24} strokeWidth={2} />
+    </div>
 
-          <p
-            style={{
-              color:
-                dadosDashboard === null
-                  ? "#64748b"
-                  : Number(dadosDashboard.saldo_previsto) > 0
-                    ? "#16a34a"
-                    : Number(dadosDashboard.saldo_previsto) < 0
-                      ? "#ef4444"
-                      : "#64748b",
-            }}
-          >
-            {dadosDashboard === null
-              ? "Carregando..."
-              : Number(dadosDashboard.saldo_previsto).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-          </p>
-        </div>
+    <div>
+      <h2>Saldo previsto</h2>
+
+      <p
+        style={{
+          color:
+            dadosDashboard === null
+              ? "#64748b"
+              : Number(dadosDashboard.saldo_previsto) > 0
+                ? "#16a34a"
+                : Number(dadosDashboard.saldo_previsto) < 0
+                  ? "#ef4444"
+                  : "#64748b",
+        }}
+      >
+        {dadosDashboard === null
+          ? "Carregando..."
+          : Number(dadosDashboard.saldo_previsto).toLocaleString(
+              "pt-BR",
+              {
+                style: "currency",
+                currency: "BRL",
+              }
+            )}
+      </p>
+    </div>
+  </div>
+</div>
       </div>
 
       {/* Graficos financeiros */}
@@ -411,25 +527,55 @@ function Dashboard() {
 
                   <td>{movimentacao.categoria}</td>
 
-                  <td
-                    style={{
-                      color:
-                        movimentacao.tipo === "RECEITA" ? "#16a34a" : "#ef4444",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {movimentacao.tipo === "RECEITA" ? "Receita" : "Despesa"}
-                  </td>
-
                   <td>
-                    {Number(movimentacao.valor_realizado).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
-                  </td>
+  <span
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: "5px",
+      padding: "5px 9px",
+      borderRadius: "999px",
+      backgroundColor:
+        movimentacao.tipo === "RECEITA"
+          ? "#dcfce7"
+          : "#fee2e2",
+      color:
+        movimentacao.tipo === "RECEITA"
+          ? "#16a34a"
+          : "#ef4444",
+      fontSize: "12px",
+      fontWeight: 600,
+    }}
+  >
+    {movimentacao.tipo === "RECEITA" ? (
+      <ArrowUpRight size={14} strokeWidth={2} />
+    ) : (
+      <ArrowDownRight size={14} strokeWidth={2} />
+    )}
+
+    {movimentacao.tipo === "RECEITA"
+      ? "Receita"
+      : "Despesa"}
+  </span>
+</td>
+
+                  <td
+  style={{
+    color:
+      movimentacao.tipo === "RECEITA"
+        ? "#16a34a"
+        : "#ef4444",
+    fontWeight: 700,
+  }}
+>
+  {Number(movimentacao.valor_realizado).toLocaleString(
+    "pt-BR",
+    {
+      style: "currency",
+      currency: "BRL",
+    }
+  )}
+</td>
                 </tr>
               ))}
             </tbody>
