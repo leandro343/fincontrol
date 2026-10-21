@@ -3,6 +3,7 @@ import "./App.css";
 import Categorias from "./pages/Categorias";
 import Contas from "./pages/Contas";
 import Movimentacoes from "./pages/Movimentacoes";
+import Dashboard from "./pages/Dashboard";
 import {
   LayoutDashboard,
   WalletCards,
@@ -12,7 +13,7 @@ import {
   ChartNoAxesCombined,
   UserRound,
   LogOut,
-  Menu
+  Menu,
 } from "lucide-react";
 
 function App() {
@@ -40,19 +41,16 @@ function App() {
     setMensagem("");
 
     try {
-      const resposta = await fetch(
-        "http://localhost:3000/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email,
-            senha
-          })
-        }
-      );
+      const resposta = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          senha,
+        }),
+      });
 
       const dados = await resposta.json();
 
@@ -68,9 +66,9 @@ function App() {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         const perfil = await respostaPerfil.json();
@@ -101,20 +99,17 @@ function App() {
     setMensagem("");
 
     try {
-      const resposta = await fetch(
-        "http://localhost:3000/api/usuarios",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            nome,
-            email,
-            senha
-          })
-        }
-      );
+      const resposta = await fetch("http://localhost:3000/api/usuarios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome,
+          email,
+          senha,
+        }),
+      });
 
       const dados = await resposta.json();
 
@@ -125,9 +120,7 @@ function App() {
         setEmail("");
         setSenha("");
 
-        setMensagem(
-          "Usuário cadastrado com sucesso! Faça o login."
-        );
+        setMensagem("Usuário cadastrado com sucesso! Faça o login.");
 
         setTelaCadastro(false);
       } else {
@@ -154,13 +147,13 @@ function App() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             nome: nomeEdicao,
-            email: emailEdicao
-          })
-        }
+            email: emailEdicao,
+          }),
+        },
       );
 
       const dados = await resposta.json();
@@ -171,7 +164,7 @@ function App() {
         setUsuario({
           ...usuario,
           nome: nomeEdicao,
-          email: emailEdicao
+          email: emailEdicao,
         });
 
         setMensagem("Perfil atualizado com sucesso!");
@@ -187,7 +180,7 @@ function App() {
 
   async function handleExcluirConta() {
     const confirmar = window.confirm(
-      "Tem certeza que deseja excluir sua conta?"
+      "Tem certeza que deseja excluir sua conta?",
     );
 
     if (!confirmar) {
@@ -204,9 +197,9 @@ function App() {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
       const dados = await resposta.json();
@@ -255,9 +248,7 @@ function App() {
                 Fin<span>Control</span>
               </div>
 
-              <p className="sidebar-brand-subtitle">
-                Controle Financeiro
-              </p>
+              <p className="sidebar-brand-subtitle">Controle Financeiro</p>
             </div>
 
             <nav className="sidebar-nav">
@@ -266,9 +257,16 @@ function App() {
 
                 <button
                   type="button"
-                  className="sidebar-item sidebar-item-disabled"
+                  className={`sidebar-item ${
+                    paginaAtual === "dashboard" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("dashboard")}
                 >
-                  <LayoutDashboard className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <LayoutDashboard
+                    className="sidebar-icon"
+                    size={19}
+                    strokeWidth={1.8}
+                  />
                   <span>Dashboard</span>
                 </button>
               </div>
@@ -277,36 +275,34 @@ function App() {
                 <span className="sidebar-section-title">Finanças</span>
 
                 <button
-  type="button"
-  className={`sidebar-item ${
-    paginaAtual === "contas" ? "sidebar-item-active" : ""
-  }`}
-  onClick={() => setPaginaAtual("contas")}
->
-  <WalletCards
-    className="sidebar-icon"
-    size={19}
-    strokeWidth={1.8}
-  />
-  <span>Contas</span>
-</button>
+                  type="button"
+                  className={`sidebar-item ${
+                    paginaAtual === "contas" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("contas")}
+                >
+                  <WalletCards
+                    className="sidebar-icon"
+                    size={19}
+                    strokeWidth={1.8}
+                  />
+                  <span>Contas</span>
+                </button>
 
                 <button
-  type="button"
-  className={`sidebar-item ${
-    paginaAtual === "movimentacoes"
-      ? "sidebar-item-active"
-      : ""
-  }`}
-  onClick={() => setPaginaAtual("movimentacoes")}
->
-  <ArrowRightLeft
-    className="sidebar-icon"
-    size={19}
-    strokeWidth={1.8}
-  />
-  <span>Movimentações</span>
-</button>
+                  type="button"
+                  className={`sidebar-item ${
+                    paginaAtual === "movimentacoes" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("movimentacoes")}
+                >
+                  <ArrowRightLeft
+                    className="sidebar-icon"
+                    size={19}
+                    strokeWidth={1.8}
+                  />
+                  <span>Movimentações</span>
+                </button>
 
                 <button
                   type="button"
@@ -323,7 +319,11 @@ function App() {
                   type="button"
                   className="sidebar-item sidebar-item-disabled"
                 >
-                  <Target className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <Target
+                    className="sidebar-icon"
+                    size={19}
+                    strokeWidth={1.8}
+                  />
                   <span>Metas Financeiras</span>
                 </button>
               </div>
@@ -335,7 +335,11 @@ function App() {
                   type="button"
                   className="sidebar-item sidebar-item-disabled"
                 >
-                  <ChartNoAxesCombined className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <ChartNoAxesCombined
+                    className="sidebar-icon"
+                    size={19}
+                    strokeWidth={1.8}
+                  />
                   <span>Relatórios</span>
                 </button>
               </div>
@@ -349,7 +353,11 @@ function App() {
                 }`}
                 onClick={() => setPaginaAtual("perfil")}
               >
-                <UserRound className="sidebar-icon" size={19} strokeWidth={1.8} />
+                <UserRound
+                  className="sidebar-icon"
+                  size={19}
+                  strokeWidth={1.8}
+                />
                 <span>Perfil</span>
               </button>
 
@@ -366,42 +374,34 @@ function App() {
 
           <main className="profile-main">
             <header className="profile-topbar">
-              <button
-                type="button"
-                className="menu-button"
-                aria-label="Menu"
-              >
+              <button type="button" className="menu-button" aria-label="Menu">
                 <Menu size={22} strokeWidth={2} />
               </button>
 
               <div className="topbar-user">
                 <div className="topbar-avatar">
-                  {usuario.nome
-                    ? usuario.nome.charAt(0).toUpperCase()
-                    : "U"}
+                  {usuario.nome ? usuario.nome.charAt(0).toUpperCase() : "U"}
                 </div>
 
-                <span>
-                  Olá, {usuario.nome.split(" ")[0]}!
-                </span>
+                <span>Olá, {usuario.nome.split(" ")[0]}!</span>
               </div>
             </header>
 
-              <section className="profile-content">
-  {paginaAtual === "categorias" ? (
-  <Categorias />
-) : paginaAtual === "contas" ? (
-  <Contas />
-) : paginaAtual === "movimentacoes" ? (
-  <Movimentacoes />
-) : (
-    <>
+            <section className="profile-content">
+              {paginaAtual === "dashboard" ? (
+                <Dashboard />
+              ) : paginaAtual === "categorias" ? (
+                <Categorias />
+              ) : paginaAtual === "contas" ? (
+                <Contas />
+              ) : paginaAtual === "movimentacoes" ? (
+                <Movimentacoes />
+              ) : (
+                <>
                   <div className="profile-heading">
                     <h1>Meu Perfil</h1>
 
-                    <p>
-                      Gerencie suas informações pessoais e dados da conta.
-                    </p>
+                    <p>Gerencie suas informações pessoais e dados da conta.</p>
                   </div>
 
                   <div className="profile-summary-card">
@@ -426,9 +426,7 @@ function App() {
 
                       <p>Data de Cadastro</p>
 
-                      <strong>
-                        {formatarData(usuario.created_at)}
-                      </strong>
+                      <strong>{formatarData(usuario.created_at)}</strong>
                     </div>
                   </div>
 
@@ -446,9 +444,7 @@ function App() {
                       >
                         <div className="profile-form-grid">
                           <div className="form-group">
-                            <label htmlFor="nomeEdicao">
-                              Nome Completo
-                            </label>
+                            <label htmlFor="nomeEdicao">Nome Completo</label>
 
                             <input
                               type="text"
@@ -461,9 +457,7 @@ function App() {
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="emailEdicao">
-                              E-mail
-                            </label>
+                            <label htmlFor="emailEdicao">E-mail</label>
 
                             <input
                               type="email"
@@ -477,16 +471,11 @@ function App() {
                         </div>
 
                         {mensagem && (
-                          <p className="profile-message">
-                            {mensagem}
-                          </p>
+                          <p className="profile-message">{mensagem}</p>
                         )}
 
                         <div className="profile-form-actions">
-                          <button
-                            type="submit"
-                            className="save-profile-button"
-                          >
+                          <button type="submit" className="save-profile-button">
                             Salvar Alterações
                           </button>
                         </div>
@@ -495,16 +484,14 @@ function App() {
 
                     <section className="account-card">
                       <div className="profile-card-title">
-                        <span className="danger-title-icon">
-                          !
-                        </span>
+                        <span className="danger-title-icon">!</span>
 
                         <h2>Conta</h2>
                       </div>
 
                       <p className="account-text">
-                        Você pode excluir permanentemente sua conta
-                        e seus dados do FinControl.
+                        Você pode excluir permanentemente sua conta e seus dados
+                        do FinControl.
                       </p>
 
                       <button
@@ -526,18 +513,13 @@ function App() {
           <div className="auth-wrapper">
             <div className="auth-brand-panel">
               <div>
-                <h1 className="brand-logo">
-                  FinControl
-                </h1>
+                <h1 className="brand-logo">FinControl</h1>
 
-                <h2 className="brand-title">
-                  Comece agora sua jornada.
-                </h2>
+                <h2 className="brand-title">Comece agora sua jornada.</h2>
 
                 <p className="brand-text">
-                  Crie sua conta e tenha mais controle
-                  sobre suas finanças de forma simples
-                  e segura.
+                  Crie sua conta e tenha mais controle sobre suas finanças de
+                  forma simples e segura.
                 </p>
               </div>
 
@@ -548,9 +530,7 @@ function App() {
 
             <div className="auth-form-panel">
               <div className="auth-form-content">
-                <h2 className="auth-title">
-                  Criar sua conta
-                </h2>
+                <h2 className="auth-title">Criar sua conta</h2>
 
                 <p className="auth-subtitle">
                   Preencha os dados abaixo para se cadastrar.
@@ -558,71 +538,50 @@ function App() {
 
                 <form onSubmit={handleCadastro}>
                   <div className="form-group">
-                    <label htmlFor="nome">
-                      Nome
-                    </label>
+                    <label htmlFor="nome">Nome</label>
 
                     <input
                       type="text"
                       id="nome"
                       value={nome}
-                      onChange={(event) =>
-                        setNome(event.target.value)
-                      }
+                      onChange={(event) => setNome(event.target.value)}
                       placeholder="Digite seu nome"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="emailCadastro">
-                      E-mail
-                    </label>
+                    <label htmlFor="emailCadastro">E-mail</label>
 
                     <input
                       type="email"
                       id="emailCadastro"
                       value={email}
-                      onChange={(event) =>
-                        setEmail(event.target.value)
-                      }
+                      onChange={(event) => setEmail(event.target.value)}
                       placeholder="Digite seu e-mail"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="senhaCadastro">
-                      Senha
-                    </label>
+                    <label htmlFor="senhaCadastro">Senha</label>
 
                     <input
                       type="password"
                       id="senhaCadastro"
                       value={senha}
-                      onChange={(event) =>
-                        setSenha(event.target.value)
-                      }
+                      onChange={(event) => setSenha(event.target.value)}
                       placeholder="Digite sua senha"
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="primary-button"
-                  >
+                  <button type="submit" className="primary-button">
                     Cadastrar
                   </button>
                 </form>
 
-                {mensagem && (
-                  <p className="message">
-                    {mensagem}
-                  </p>
-                )}
+                {mensagem && <p className="message">{mensagem}</p>}
 
                 <div className="auth-switch">
-                  <p>
-                    Já possui uma conta?
-                  </p>
+                  <p>Já possui uma conta?</p>
 
                   <button
                     type="button"
@@ -644,17 +603,15 @@ function App() {
           <div className="auth-wrapper">
             <div className="auth-brand-panel">
               <div>
-                <h1 className="brand-logo">
-                  FinControl
-                </h1>
+                <h1 className="brand-logo">FinControl</h1>
 
                 <h2 className="brand-title">
                   Mais controle para suas finanças.
                 </h2>
 
                 <p className="brand-text">
-                  Organize, acompanhe e tome melhores
-                  decisões para sua vida financeira.
+                  Organize, acompanhe e tome melhores decisões para sua vida
+                  financeira.
                 </p>
               </div>
 
@@ -665,9 +622,7 @@ function App() {
 
             <div className="auth-form-panel">
               <div className="auth-form-content">
-                <h2 className="auth-title">
-                  Bem-vindo(a)!
-                </h2>
+                <h2 className="auth-title">Bem-vindo(a)!</h2>
 
                 <p className="auth-subtitle">
                   Faça seu login para acessar o FinControl.
@@ -675,55 +630,38 @@ function App() {
 
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label htmlFor="email">
-                      E-mail
-                    </label>
+                    <label htmlFor="email">E-mail</label>
 
                     <input
                       type="email"
                       id="email"
                       value={email}
-                      onChange={(event) =>
-                        setEmail(event.target.value)
-                      }
+                      onChange={(event) => setEmail(event.target.value)}
                       placeholder="Digite seu e-mail"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="senha">
-                      Senha
-                    </label>
+                    <label htmlFor="senha">Senha</label>
 
                     <input
                       type="password"
                       id="senha"
                       value={senha}
-                      onChange={(event) =>
-                        setSenha(event.target.value)
-                      }
+                      onChange={(event) => setSenha(event.target.value)}
                       placeholder="Digite sua senha"
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="primary-button"
-                  >
+                  <button type="submit" className="primary-button">
                     Entrar
                   </button>
                 </form>
 
-                {mensagem && (
-                  <p className="message">
-                    {mensagem}
-                  </p>
-                )}
+                {mensagem && <p className="message">{mensagem}</p>}
 
                 <div className="auth-switch">
-                  <p>
-                    Não possui uma conta?
-                  </p>
+                  <p>Não possui uma conta?</p>
 
                   <button
                     type="button"

@@ -4670,3 +4670,468 @@
   padding-top: 12px;
   padding-bottom: 12px;
 }
+
+/* =========================================================
+   SPRINT 3 — DASHBOARD FINCONTROL
+   Layout compacto consolidado (RF006)
+   Mantem os estilos de Perfil, Contas, Categorias e Movimentacoes.
+   ========================================================= */
+
+/* A largura da area principal e definida no contêiner da aplicacao.
+   Restringimos o ajuste a pagina que contem o Dashboard. */
+.profile-content:has(> .dashboard-page) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px clamp(18px, 2vw, 34px) 26px;
+  box-sizing: border-box;
+}
+
+.dashboard-page {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cabecalho compacto: titulo e periodo compartilham a mesma faixa.
+   A barra geral (avatar/menu) e outras paginas nao sao modificadas. */
+.dashboard-topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
+  align-items: center;
+  column-gap: 20px;
+  row-gap: 12px;
+  margin: 0 0 14px;
+}
+
+.dashboard-topo .profile-heading {
+  margin: 0;
+  min-width: 0;
+}
+
+.dashboard-topo .profile-heading h1 {
+  margin: 0 0 5px;
+  font-size: clamp(23px, 1.85vw, 29px);
+  line-height: 1.2;
+}
+
+.dashboard-topo .profile-heading p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.dashboard-filtros {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "rotulo-inicio rotulo-fim"
+    "campo-inicio campo-fim";
+  gap: 5px 10px;
+  margin: 0;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.dashboard-filtros label[for="data-inicio"] { grid-area: rotulo-inicio; }
+.dashboard-filtros label[for="data-fim"] { grid-area: rotulo-fim; }
+.dashboard-filtros #data-inicio { grid-area: campo-inicio; }
+.dashboard-filtros #data-fim { grid-area: campo-fim; }
+
+.dashboard-filtros label {
+  margin: 0;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dashboard-filtros input[type="date"] {
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  box-sizing: border-box;
+  padding: 0 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 12px;
+}
+
+.dashboard-filtros input[type="date"]:focus-visible {
+  border-color: var(--fc-primary, #2563eb);
+  outline: 2px solid var(--fc-primary, #2563eb);
+  outline-offset: 1px;
+}
+
+/* Quatro indicadores sinteticos, legiveis e responsivos. */
+.dashboard-indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.dashboard-indicador {
+  min-width: 0;
+  min-height: 92px;
+  box-sizing: border-box;
+  padding: 15px 17px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.dashboard-indicador h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #64748b;
+}
+
+.dashboard-indicador p {
+  margin: 0;
+  font-size: clamp(17px, 1.4vw, 22px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #16a34a;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-indicador-despesas p { color: #ef4444; }
+
+/* Tres graficos NA MESMA FAIXA: dois comparativos e uma rosca.
+   display: contents remove apenas a caixa de layout intermediaria;
+   os dois <section> continuam preservados no React. */
+.dashboard-visualizacoes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 12px;
+  margin: 0 0 12px;
+  min-width: 0;
+}
+
+.dashboard-visualizacoes .dashboard-graficos {
+  display: contents;
+}
+
+.dashboard-visualizacoes .dashboard-grafico-realizado,
+.dashboard-visualizacoes .dashboard-grafico-categorias {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  min-height: 210px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 14px 17px;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.dashboard-visualizacoes .dashboard-grafico-realizado h2,
+.dashboard-visualizacoes .dashboard-grafico-categorias h2 {
+  margin: 0 0 13px;
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dashboard-grafico-receitas,
+.dashboard-grafico-despesas {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.dashboard-grafico-despesas { margin-top: 18px; }
+
+.dashboard-grafico-receitas > span,
+.dashboard-grafico-despesas > span {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #475569;
+}
+
+.dashboard-grafico-receitas strong { color: #16a34a; }
+.dashboard-grafico-despesas strong { color: #ef4444; }
+
+.dashboard-visualizacoes progress {
+  display: block;
+  width: 100%;
+  height: 13px;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.dashboard-visualizacoes progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: #e2e8f0;
+}
+
+.dashboard-grafico-receitas progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: #16a34a;
+}
+.dashboard-grafico-despesas progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: #ef4444;
+}
+.dashboard-grafico-receitas progress::-moz-progress-bar { background: #16a34a; }
+.dashboard-grafico-despesas progress::-moz-progress-bar { background: #ef4444; }
+
+/* Rosca centralizada sem sobras excessivas de altura. */
+.dashboard-visualizacoes .dashboard-categorias-conteudo {
+  display: grid;
+  grid-template-columns: minmax(138px, 154px) minmax(0, 1fr);
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.dashboard-visualizacoes .dashboard-categorias-rosca {
+  width: min(100%, 154px);
+  aspect-ratio: 1;
+  height: auto;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.dashboard-categorias-centro {
+  width: 75%;
+  height: 75%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 8px 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.dashboard-categorias-centro span {
+  font-size: 10px;
+  line-height: 1.2;
+  color: #64748b;
+}
+
+.dashboard-categorias-centro strong {
+  max-width: 100%;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-categorias-legenda {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-categorias-legenda li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid #edf1f5;
+  min-width: 0;
+  color: #334155;
+  font-size: 12px;
+}
+
+.dashboard-categorias-legenda li:last-child { border-bottom: 0; }
+
+.dashboard-categorias-cor {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.dashboard-categorias-legenda li > span:nth-child(2) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dashboard-categorias-legenda li strong {
+  margin: 0;
+  font-size: 12px;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tabela de movimentacoes no final da pagina. */
+.dashboard-ultimas-movimentacoes {
+  min-width: 0;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 18px 19px;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.dashboard-ultimas-movimentacoes h2 {
+  margin: 0 0 15px;
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dashboard-ultimas-movimentacoes table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: #334155;
+}
+
+.dashboard-ultimas-movimentacoes th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-ultimas-movimentacoes td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-ultimas-movimentacoes tbody tr:hover { background: #f8fafc; }
+.dashboard-ultimas-movimentacoes tbody tr:last-child td { border-bottom: 0; }
+
+.dashboard-ultimas-movimentacoes th:last-child,
+.dashboard-ultimas-movimentacoes td:last-child {
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Adaptacao progressiva: duas colunas, depois uma coluna. */
+@media (max-width: 1420px) {
+  .dashboard-visualizacoes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-visualizacoes .dashboard-grafico-categorias {
+    grid-column: 1 / -1;
+    min-height: 196px;
+  }
+
+  .dashboard-visualizacoes .dashboard-categorias-conteudo {
+    grid-template-columns: minmax(145px, 175px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1120px) {
+  .dashboard-topo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dashboard-filtros {
+    max-width: 410px;
+  }
+  .dashboard-indicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .profile-content:has(> .dashboard-page) {
+    padding: 16px 14px 24px;
+  }
+  .dashboard-visualizacoes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dashboard-visualizacoes .dashboard-grafico-categorias {
+    grid-column: auto;
+  }
+  .dashboard-indicadores {
+    gap: 9px;
+  }
+  .dashboard-indicador {
+    padding: 13px;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-filtros {
+    max-width: none;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "rotulo-inicio"
+      "campo-inicio"
+      "rotulo-fim"
+      "campo-fim";
+  }
+  .dashboard-indicadores {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dashboard-visualizacoes .dashboard-categorias-conteudo {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+  .dashboard-categorias-legenda { max-width: 320px; }
+}
