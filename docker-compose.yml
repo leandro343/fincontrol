@@ -19,7 +19,7 @@ services:
       retries: 20
 
   backend:
-    image: leandro343/fincontrol-backend:latest
+    image: leandro343/fincontrol-backend:sprint3
     container_name: fincontrol-backend
     restart: unless-stopped
     environment:
@@ -37,7 +37,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: leandro343/fincontrol-frontend:latest
+    image: leandro343/fincontrol-frontend:sprint3
     container_name: fincontrol-frontend
     restart: unless-stopped
     ports:
