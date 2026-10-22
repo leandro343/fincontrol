@@ -157,40 +157,95 @@ async function atualizarUsuario(req, res) {
 }
 
 async function excluirUsuario(req, res) {
+  let conexao;
+
   try {
     const { id } = req.params;
-    if (Number(id) !== req.usuario.id) {
-  return res.status(403).json({
-    mensagem: "Acesso não autorizado a este usuário."
-  });
-}
 
-    const [usuarios] = await pool.query(
-      "SELECT id FROM usuarios WHERE id = ?",
+    // Verifica se o usuário está excluindo a própria conta.
+    if (Number(id) !== req.usuario.id) {
+      return res.status(403).json({
+        mensagem: "Acesso não autorizado a este usuário."
+      });
+    }
+
+    // Obtém uma conexão exclusiva para a transação.
+    conexao = await pool.getConnection();
+
+    // Inicia a transação no banco de dados.
+    await conexao.beginTransaction();
+
+    // Verifica se o usuário existe e bloqueia o registro
+    // durante a operação.
+    const [usuarios] = await conexao.query(
+      "SELECT id FROM usuarios WHERE id = ? FOR UPDATE",
       [id]
     );
 
     if (usuarios.length === 0) {
+      await conexao.rollback();
+
       return res.status(404).json({
         mensagem: "Usuário não encontrado."
       });
     }
 
-    await pool.query(
+    // 1. Exclui as movimentações financeiras do usuário.
+    await conexao.query(
+      `DELETE m
+       FROM movimentacoes_financeiras AS m
+       INNER JOIN contas_contabeis AS c
+         ON m.conta_id = c.id
+       WHERE c.usuario_id = ?`,
+      [id]
+    );
+
+    // 2. Exclui as contas contábeis do usuário.
+    await conexao.query(
+      "DELETE FROM contas_contabeis WHERE usuario_id = ?",
+      [id]
+    );
+
+    // 3. Exclui as categorias financeiras do usuário.
+    await conexao.query(
+      "DELETE FROM categorias WHERE usuario_id = ?",
+      [id]
+    );
+
+    // 4. Exclui o próprio usuário.
+    await conexao.query(
       "DELETE FROM usuarios WHERE id = ?",
       [id]
     );
+
+    // Confirma todas as exclusões.
+    await conexao.commit();
 
     return res.status(200).json({
       mensagem: "Usuário excluído com sucesso!"
     });
 
   } catch (error) {
+    // Desfaz as alterações em caso de erro.
+    if (conexao) {
+      try {
+        await conexao.rollback();
+      } catch (rollbackError) {
+        console.error("Erro ao reverter transação:", rollbackError);
+      }
+    }
+
     console.error("Erro ao excluir usuário:", error);
 
     return res.status(500).json({
       mensagem: "Erro interno do servidor."
     });
+
+  } finally {
+    // Libera a conexão para outras operações.
+    if (conexao) {
+      conexao.release();
+    }
   }
 }
 
