@@ -1,0 +1,46 @@
+name: fincontrol-sprint4-entrega
+
+services:
+  database:
+    image: leandro343/fincontrol-database:sprint4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: sprint4_demo_root_2026
+      MYSQL_DATABASE: fincontrol
+      MYSQL_USER: fincontrol_user
+      MYSQL_PASSWORD: sprint4_demo_user_2026
+    volumes:
+      - mysql_sprint4_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    image: leandro343/fincontrol-backend:sprint4
+    restart: unless-stopped
+    environment:
+      DB_HOST: database
+      DB_USER: fincontrol_user
+      DB_PASSWORD: sprint4_demo_user_2026
+      DB_NAME: fincontrol
+      DB_PORT: 3306
+      PORT: 3000
+      JWT_SECRET: fincontrol_sprint4_chave_demo_exclusiva_para_testes_2026
+    ports:
+      - "3000:3000"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  frontend:
+    image: leandro343/fincontrol-frontend:sprint4
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_sprint4_data:
