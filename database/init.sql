@@ -83,3 +83,30 @@ CREATE TABLE IF NOT EXISTS movimentacoes_financeiras (
     CONSTRAINT chk_movimentacoes_valor_realizado
         CHECK (valor_realizado > 0)
 );
+
+CREATE TABLE IF NOT EXISTS metas_financeiras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    valor_objetivo DECIMAL(10,2) NOT NULL,
+    valor_atual DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_metas_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuarios(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT chk_metas_valor_objetivo
+        CHECK (valor_objetivo > 0),
+
+    CONSTRAINT chk_metas_valor_atual
+        CHECK (valor_atual >= 0),
+
+    CONSTRAINT chk_metas_periodo
+        CHECK (data_fim >= data_inicio)
+);

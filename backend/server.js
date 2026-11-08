@@ -7,6 +7,7 @@ const contaContabilRoutes = require("./routes/contaContabilRoutes");
 const movimentacaoRoutes = require("./routes/movimentacaoRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const relatorioRoutes = require("./routes/relatorioRoutes");
+const metasRoutes = require("./routes/metasRoutes");
 require("dotenv").config();
 const pool = require("./config/db");
 
@@ -22,6 +23,7 @@ app.use("/api/contas-contabeis", contaContabilRoutes);
 app.use("/api/movimentacoes", movimentacaoRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/relatorios", relatorioRoutes);
+app.use("/api/metas", metasRoutes);
 
 app.get("/", (req, res) => {
   res.json({

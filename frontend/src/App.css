@@ -5237,3 +5237,623 @@
   color: #64748b;
   font-size: 13px;
 }
+
+/* ==========================================
+   SPRINT 4 - RF005
+   CARDS DE METAS FINANCEIRAS
+========================================== */
+
+.metas-lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 22px;
+}
+
+.metas-card {
+  padding: 22px 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.035);
+}
+
+.metas-card h3 {
+  margin: 0 0 16px;
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.metas-card p {
+  margin: 0 0 10px;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.metas-card label {
+  display: block;
+  margin: 18px 0 9px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.metas-card progress {
+  display: block;
+  width: 100%;
+  height: 10px;
+  border: none;
+  border-radius: 999px;
+  overflow: hidden;
+  accent-color: #0867f2;
+}
+
+.metas-card progress::-webkit-progress-bar {
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+
+.metas-card progress::-webkit-progress-value {
+  background: #0867f2;
+  border-radius: 999px;
+}
+
+.metas-card progress::-moz-progress-bar {
+  background: #0867f2;
+  border-radius: 999px;
+}
+
+@media (max-width: 600px) {
+  .metas-lista {
+    padding: 14px;
+  }
+
+  .metas-card {
+    padding: 18px;
+  }
+}
+
+/* Ações dos cards de Metas Financeiras */
+.metas-acoes {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #e5eaf2;
+}
+
+
+/* Botões dos cards de Metas Financeiras */
+.metas-acoes button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Botão Editar */
+.metas-acoes .category-edit-button {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.metas-acoes .category-edit-button:hover {
+  background-color: #dbeafe;
+  border-color: #93c5fd;
+}
+
+/* Botão Excluir */
+.metas-acoes .category-delete-button {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.metas-acoes .category-delete-button:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+/* Acessibilidade ao navegar pelo teclado */
+.metas-acoes button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+
+/* Grid responsivo das Metas Financeiras */
+.metas-lista {
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 360px), 1fr)
+  );
+}
+
+/* Organização do valor acumulado */
+.metas-card > p.metas-valor-atual {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+/* Rótulo do valor acumulado */
+.metas-card .metas-valor-rotulo {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* Valor financeiro */
+.metas-card .metas-valor-numero {
+  font-size: 17px;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Organização do valor objetivo das metas */
+.metas-card .metas-valor-objetivo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* Rótulo do objetivo */
+.metas-card .metas-objetivo-rotulo {
+  font-size: 13px;
+  font-weight: 400;
+  color: #64748b;
+}
+
+/* Valor financeiro do objetivo */
+.metas-card .metas-objetivo-numero {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Cabeçalho da barra de progresso das metas */
+.metas-progresso-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+/* Texto Progresso */
+.metas-progresso-cabecalho label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* Percentual de conclusão */
+.metas-progresso-percentual {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Prazo de conclusão das Metas Financeiras */
+.metas-card .metas-prazo {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.5;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+
+/* Título da página de Metas Financeiras */
+.metas-page-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #172554;
+  letter-spacing: -0.7px;
+  line-height: 1.2;
+}
+
+/* Detalhe visual abaixo do título */
+.metas-page-title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 9px;
+  background-color: #2563eb;
+  border-radius: 10px;
+}
+
+/* =========================================
+   FINCONTROL - IDENTIDADE VISUAL GLOBAL
+========================================= */
+
+:root {
+  --fc-primary: #2563eb;
+  --fc-primary-hover: #1d4ed8;
+
+  --fc-title: #172554;
+  --fc-text: #334155;
+  --fc-text-muted: #64748b;
+
+  --fc-background: #f3f6fb;
+  --fc-surface: #ffffff;
+  --fc-border: #dbe4f0;
+
+  --fc-success: #16a34a;
+  --fc-danger: #dc2626;
+
+  --fc-radius: 10px;
+  --fc-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+/* Botão principal - Nova Meta */
+.metas-nova-meta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 44px;
+  padding: 11px 20px;
+
+  background-color: var(--fc-primary);
+  color: #ffffff;
+  border: 1px solid var(--fc-primary);
+  border-radius: var(--fc-radius);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.16);
+  transition: background-color 0.2s ease,
+              box-shadow 0.2s ease,
+              transform 0.2s ease;
+}
+
+.metas-nova-meta-button:hover {
+  background-color: var(--fc-primary-hover);
+  border-color: var(--fc-primary-hover);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
+}
+
+.metas-nova-meta-button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+/* =========================================
+   METAS FINANCEIRAS - CORES DOS CARDS
+========================================= */
+
+/* Variação azul */
+.metas-card--cor-0 {
+  --meta-accent: #2563eb;
+  --meta-accent-soft: #eff6ff;
+}
+
+/* Variação verde */
+.metas-card--cor-1 {
+  --meta-accent: #16a34a;
+  --meta-accent-soft: #f0fdf4;
+}
+
+/* Variação violeta */
+.metas-card--cor-2 {
+  --meta-accent: #7c3aed;
+  --meta-accent-soft: #f5f3ff;
+}
+
+/* Aplicação das cores nos cards */
+.metas-card[class*="metas-card--cor-"] {
+  border-top: 3px solid var(--meta-accent);
+
+  background: linear-gradient(
+    180deg,
+    var(--meta-accent-soft) 0%,
+    #ffffff 65px
+  );
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+.metas-card[class*="metas-card--cor-"]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fc-shadow);
+}
+
+/* Cabeçalho dos cards de Metas Financeiras */
+.metas-card-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Ícone colorido de cada meta */
+.metas-card-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+
+  background-color: var(--meta-accent-soft);
+  color: var(--meta-accent);
+}
+
+/* Título ao lado do ícone */
+.metas-card-cabecalho h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--fc-title);
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   METAS - INDICADOR CIRCULAR DE PROGRESSO
+========================================= */
+
+.metas-progresso-circular {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+
+  background: conic-gradient(
+    var(--meta-accent) 0%,
+    var(--meta-accent) var(--meta-progresso),
+    #e2e8f0 var(--meta-progresso),
+    #e2e8f0 100%
+  );
+}
+
+/* Parte interna branca do círculo */
+.metas-progresso-circular::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+/* Percentual no centro */
+.metas-progresso-circular span {
+  position: relative;
+  z-index: 1;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--meta-accent);
+}
+
+/* Preserva o espaço do título */
+.metas-card-cabecalho h3 {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Valor restante das Metas Financeiras */
+.metas-valor-restante {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 20px;
+  padding: 14px 0;
+
+  border-top: 1px solid var(--fc-border);
+}
+
+/* Descrição do valor restante */
+.metas-valor-restante span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fc-text-muted);
+}
+
+/* Valor financeiro restante */
+.metas-valor-restante strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--meta-accent);
+  white-space: nowrap;
+}
+
+/* =========================================
+   FINCONTROL - NOTIFICACOES GLOBAIS
+========================================= */
+
+.fc-notificacao {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: max-content;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 14px 16px;
+
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-border);
+  border-left: 4px solid var(--fc-success);
+  border-radius: var(--fc-radius);
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+}
+
+/* Icone da notificacao */
+.fc-notificacao-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+
+  background: #dcfce7;
+  color: var(--fc-success);
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Texto da mensagem */
+.fc-notificacao-mensagem {
+  flex: 1;
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--fc-text);
+}
+
+/* Botao para fechar */
+.fc-notificacao-fechar {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--fc-text-muted);
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fc-notificacao-fechar:hover {
+  color: var(--fc-title);
+}
+
+.fc-notificacao-fechar:focus-visible {
+  outline: 2px solid var(--fc-primary);
+  outline-offset: 3px;
+}
+
+/* Notificacoes de erro */
+.fc-notificacao--erro {
+  border-left-color: var(--fc-danger);
+}
+
+.fc-notificacao--erro .fc-notificacao-icone {
+  background: #fee2e2;
+  color: var(--fc-danger);
+}
+
+/* Adaptacao para celulares */
+@media (max-width: 600px) {
+  .fc-notificacao {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* =========================================
+   FINCONTROL - MODAL DE CONFIRMACAO
+========================================= */
+
+/* Espacamento interno do corpo */
+.modal-confirmacao-corpo {
+  padding: 22px 24px 18px;
+}
+
+/* Texto principal da confirmacao */
+.modal-confirmacao-corpo > p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--fc-text);
+}
+
+/* Aviso sobre a exclusao */
+.modal-confirmacao-corpo .modal-confirmacao-aviso {
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fc-text-muted);
+}
+
+/* Botão de confirmação de exclusão */
+.modal-confirmacao .modal-confirmacao-excluir {
+  background-color: var(--fc-danger);
+  background-image: none;
+  border: 1px solid var(--fc-danger);
+  color: #ffffff;
+  border-radius: var(--fc-radius);
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+.modal-confirmacao .modal-confirmacao-excluir:hover:not(:disabled) {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+}
+
+/* Botão desabilitado durante a exclusão */
+.modal-confirmacao .modal-confirmacao-excluir:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Rodapé do modal de confirmação */
+.modal-confirmacao .modal-confirmacao-acoes {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 24px 24px;
+}

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import "./App.css";
 import Categorias from "./pages/Categorias";
 import Contas from "./pages/Contas";
 import Movimentacoes from "./pages/Movimentacoes";
 import Dashboard from "./pages/Dashboard";
 import Relatorios from "./pages/Relatorios";
+import Metas from "./pages/Metas";
 import {
   LayoutDashboard,
   WalletCards,
@@ -228,7 +229,7 @@ function App() {
     }
   }
 
-  function handleLogout() {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem("token");
 
     setUsuario(null);
@@ -237,7 +238,15 @@ function App() {
     setNomeEdicao("");
     setEmailEdicao("");
     setMensagem("");
-  }
+  }, []);
+
+  const handleSessaoExpirada = useCallback(() => {
+    handleLogout();
+
+    setMensagem(
+      "Sua sessão expirou ou não é mais válida. Faça login novamente.",
+    );
+  }, [handleLogout]);
 
   return (
     <>
@@ -318,7 +327,10 @@ function App() {
 
                 <button
                   type="button"
-                  className="sidebar-item sidebar-item-disabled"
+                  className={`sidebar-item ${
+                    paginaAtual === "metas" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("metas")}
                 >
                   <Target
                     className="sidebar-icon"
@@ -393,7 +405,7 @@ function App() {
 
             <section className="profile-content">
               {paginaAtual === "dashboard" ? (
-                <Dashboard />
+                <Dashboard onSessaoExpirada={handleSessaoExpirada} />
               ) : paginaAtual === "relatorios" ? (
                 <Relatorios />
               ) : paginaAtual === "categorias" ? (
@@ -402,6 +414,8 @@ function App() {
                 <Contas />
               ) : paginaAtual === "movimentacoes" ? (
                 <Movimentacoes />
+              ) : paginaAtual === "metas" ? (
+                <Metas onSessaoExpirada={handleSessaoExpirada} />
               ) : (
                 <>
                   <div className="profile-heading">

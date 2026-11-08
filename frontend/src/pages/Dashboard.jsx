@@ -17,7 +17,7 @@ function formatarDataInput(data) {
   return `${ano}-${mes}-${dia}`;
 }
 
-function Dashboard() {
+function Dashboard({ onSessaoExpirada }) {
   const hoje = new Date();
 
   const [dataInicio, setDataInicio] = useState(
@@ -52,6 +52,11 @@ function Dashboard() {
           },
         );
 
+        if (resposta.status === 401) {
+          onSessaoExpirada();
+          return;
+        }
+
         const dados = await resposta.json();
 
         if (!resposta.ok) {
@@ -68,7 +73,7 @@ function Dashboard() {
     }
 
     carregarDashboard();
-  }, [dataInicio, dataFim]);
+  }, [dataInicio, dataFim, onSessaoExpirada]);
 
   // Buscar ultimas movimentacoes financeiras
   useEffect(() => {
@@ -88,6 +93,11 @@ function Dashboard() {
             },
           },
         );
+
+        if (resposta.status === 401) {
+          onSessaoExpirada();
+          return;
+        }
 
         const relatorio = await resposta.json();
 
@@ -117,7 +127,7 @@ function Dashboard() {
     }
 
     carregarMovimentacoes();
-  }, [dataInicio, dataFim]);
+  }, [dataInicio, dataFim, onSessaoExpirada]);
 
   return (
     <div className="dashboard-page">
@@ -152,438 +162,434 @@ function Dashboard() {
       </div>
 
       {/* Indicadores financeiros */}
-{dataInicio && dataFim && dataInicio > dataFim ? (
-  <p
-    role="alert"
-    style={{
-      color: "#b91c1c",
-      fontWeight: 600,
-      padding: "16px",
-      backgroundColor: "#fef2f2",
-      border: "1px solid #fecaca",
-      borderRadius: "10px",
-    }}
-  >
-    Período inválido: a data final deve ser igual ou posterior
-    à data inicial.
-  </p>
-) : (
-  <>
-      <div className="dashboard-indicadores">
-                {/* Receitas realizadas */}
+      {dataInicio && dataFim && dataInicio > dataFim ? (
+        <p
+          role="alert"
+          style={{
+            color: "#b91c1c",
+            fontWeight: 600,
+            padding: "16px",
+            backgroundColor: "#fef2f2",
+            border: "1px solid #fecaca",
+            borderRadius: "10px",
+          }}
+        >
+          Período inválido: a data final deve ser igual ou posterior à data
+          inicial.
+        </p>
+      ) : (
+        <>
+          <div className="dashboard-indicadores">
+            {/* Receitas realizadas */}
 
-        <div className="dashboard-indicador">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-            }}
-          >
-            <div
-              style={{
-                width: "56px",
-                height: "56px",
-                borderRadius: "50%",
-                backgroundColor: "#dcfce7",
-                color: "#16a34a",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <TrendingUp size={24} strokeWidth={2} />
+            <div className="dashboard-indicador">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "50%",
+                    backgroundColor: "#dcfce7",
+                    color: "#16a34a",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <TrendingUp size={24} strokeWidth={2} />
+                </div>
+
+                <div>
+                  <h2>Receitas realizadas</h2>
+
+                  <p>
+                    {dadosDashboard === null
+                      ? "Carregando..."
+                      : Number(
+                          dadosDashboard.receitas_realizadas,
+                        ).toLocaleString("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <h2>Receitas realizadas</h2>
+            {/* Despesas realizadas */}
 
-              <p>
-                {dadosDashboard === null
-                  ? "Carregando..."
-                  : Number(
-                      dadosDashboard.receitas_realizadas
-                    ).toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-              </p>
+            <div className="dashboard-indicador dashboard-indicador-despesas">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "50%",
+                    backgroundColor: "#fee2e2",
+                    color: "#ef4444",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <TrendingDown size={24} strokeWidth={2} />
+                </div>
+
+                <div>
+                  <h2>Despesas realizadas</h2>
+
+                  <p>
+                    {dadosDashboard === null
+                      ? "Carregando..."
+                      : Number(
+                          dadosDashboard.despesas_realizadas,
+                        ).toLocaleString("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Saldo realizado */}
+
+            <div className="dashboard-indicador dashboard-indicador-saldo-realizado">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "50%",
+                    backgroundColor: "#dbeafe",
+                    color: "#2563eb",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Wallet size={24} strokeWidth={2} />
+                </div>
+
+                <div>
+                  <h2>Saldo realizado</h2>
+
+                  <p
+                    style={{
+                      color:
+                        dadosDashboard === null
+                          ? "#64748b"
+                          : Number(dadosDashboard.saldo_realizado) > 0
+                            ? "#16a34a"
+                            : Number(dadosDashboard.saldo_realizado) < 0
+                              ? "#ef4444"
+                              : "#64748b",
+                    }}
+                  >
+                    {dadosDashboard === null
+                      ? "Carregando..."
+                      : Number(dadosDashboard.saldo_realizado).toLocaleString(
+                          "pt-BR",
+                          {
+                            style: "currency",
+                            currency: "BRL",
+                          },
+                        )}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Saldo previsto */}
+
+            <div className="dashboard-indicador dashboard-indicador-saldo-previsto">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "50%",
+                    backgroundColor: "#f3e8ff",
+                    color: "#9333ea",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Target size={24} strokeWidth={2} />
+                </div>
+
+                <div>
+                  <h2>Saldo previsto</h2>
+
+                  <p
+                    style={{
+                      color:
+                        dadosDashboard === null
+                          ? "#64748b"
+                          : Number(dadosDashboard.saldo_previsto) > 0
+                            ? "#16a34a"
+                            : Number(dadosDashboard.saldo_previsto) < 0
+                              ? "#ef4444"
+                              : "#64748b",
+                    }}
+                  >
+                    {dadosDashboard === null
+                      ? "Carregando..."
+                      : Number(dadosDashboard.saldo_previsto).toLocaleString(
+                          "pt-BR",
+                          {
+                            style: "currency",
+                            currency: "BRL",
+                          },
+                        )}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Despesas realizadas */}
+          {/* Graficos financeiros */}
+          <div className="dashboard-visualizacoes">
+            <div className="dashboard-graficos">
+              {/* Grafico de receitas e despesas realizadas */}
 
-        <div className="dashboard-indicador dashboard-indicador-despesas">
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "16px",
-    }}
-  >
-    <div
-      style={{
-        width: "56px",
-        height: "56px",
-        borderRadius: "50%",
-        backgroundColor: "#fee2e2",
-        color: "#ef4444",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-      }}
-    >
-      <TrendingDown size={24} strokeWidth={2} />
-    </div>
+              <section className="dashboard-grafico-realizado">
+                <h2>Receitas x Despesas realizadas</h2>
 
-    <div>
-      <h2>Despesas realizadas</h2>
+                {dadosDashboard === null ? (
+                  <p>Carregando gráfico...</p>
+                ) : (
+                  <>
+                    <div className="dashboard-grafico-receitas">
+                      <span>
+                        Receitas realizadas:{" "}
+                        <strong>
+                          {Number(
+                            dadosDashboard.receitas_realizadas,
+                          ).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </strong>
+                      </span>
 
-      <p>
-        {dadosDashboard === null
-          ? "Carregando..."
-          : Number(
-              dadosDashboard.despesas_realizadas
-            ).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-      </p>
-    </div>
-  </div>
-</div>
+                      <progress
+                        aria-label="Receitas realizadas"
+                        value={Number(dadosDashboard.receitas_realizadas)}
+                        max={Math.max(
+                          1,
+                          Number(dadosDashboard.receitas_realizadas),
+                          Number(dadosDashboard.despesas_realizadas),
+                        )}
+                      />
+                    </div>
 
-        {/* Saldo realizado */}
+                    <div className="dashboard-grafico-despesas">
+                      <span>
+                        Despesas realizadas:{" "}
+                        <strong>
+                          {Number(
+                            dadosDashboard.despesas_realizadas,
+                          ).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </strong>
+                      </span>
 
-        <div className="dashboard-indicador dashboard-indicador-saldo-realizado">
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "16px",
-    }}
-  >
-    <div
-      style={{
-        width: "56px",
-        height: "56px",
-        borderRadius: "50%",
-        backgroundColor: "#dbeafe",
-        color: "#2563eb",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-      }}
-    >
-      <Wallet size={24} strokeWidth={2} />
-    </div>
+                      <progress
+                        aria-label="Despesas realizadas"
+                        value={Number(dadosDashboard.despesas_realizadas)}
+                        max={Math.max(
+                          1,
+                          Number(dadosDashboard.receitas_realizadas),
+                          Number(dadosDashboard.despesas_realizadas),
+                        )}
+                      />
+                    </div>
+                  </>
+                )}
+              </section>
 
-    <div>
-      <h2>Saldo realizado</h2>
+              {/* Grafico de receitas e despesas previstas */}
 
-      <p
-        style={{
-          color:
-            dadosDashboard === null
-              ? "#64748b"
-              : Number(dadosDashboard.saldo_realizado) > 0
-                ? "#16a34a"
-                : Number(dadosDashboard.saldo_realizado) < 0
-                  ? "#ef4444"
-                  : "#64748b",
-        }}
-      >
-        {dadosDashboard === null
-          ? "Carregando..."
-          : Number(dadosDashboard.saldo_realizado).toLocaleString(
-              "pt-BR",
-              {
-                style: "currency",
-                currency: "BRL",
-              }
+              <section className="dashboard-grafico-realizado dashboard-grafico-previsto">
+                <h2>Receitas x Despesas previstas</h2>
+
+                {dadosDashboard === null ? (
+                  <p>Carregando gráfico...</p>
+                ) : (
+                  <>
+                    <div className="dashboard-grafico-receitas">
+                      <span>
+                        Receitas previstas:{" "}
+                        <strong>
+                          {Number(
+                            dadosDashboard.receitas_previstas,
+                          ).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </strong>
+                      </span>
+
+                      <progress
+                        aria-label="Receitas previstas"
+                        value={Number(dadosDashboard.receitas_previstas)}
+                        max={Math.max(
+                          1,
+                          Number(dadosDashboard.receitas_previstas),
+                          Number(dadosDashboard.despesas_previstas),
+                        )}
+                      />
+                    </div>
+
+                    <div className="dashboard-grafico-despesas">
+                      <span>
+                        Despesas previstas:{" "}
+                        <strong>
+                          {Number(
+                            dadosDashboard.despesas_previstas,
+                          ).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </strong>
+                      </span>
+
+                      <progress
+                        aria-label="Despesas previstas"
+                        value={Number(dadosDashboard.despesas_previstas)}
+                        max={Math.max(
+                          1,
+                          Number(dadosDashboard.receitas_previstas),
+                          Number(dadosDashboard.despesas_previstas),
+                        )}
+                      />
+                    </div>
+                  </>
+                )}
+              </section>
+            </div>
+            <GraficoDespesas categorias={categoriasDespesas} />
+          </div>
+          <section className="dashboard-ultimas-movimentacoes">
+            <h2>Últimas movimentações</h2>
+
+            {ultimasMovimentacoes.length === 0 ? (
+              <p>Nenhuma movimentação encontrada no período.</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Conta</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {ultimasMovimentacoes.map((movimentacao) => (
+                    <tr key={movimentacao.id}>
+                      <td>
+                        {movimentacao.data_movimentacao
+                          .split("-")
+                          .reverse()
+                          .join("/")}
+                      </td>
+
+                      <td>{movimentacao.conta}</td>
+
+                      <td>{movimentacao.categoria}</td>
+
+                      <td>
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            padding: "5px 9px",
+                            borderRadius: "999px",
+                            backgroundColor:
+                              movimentacao.tipo === "RECEITA"
+                                ? "#dcfce7"
+                                : "#fee2e2",
+                            color:
+                              movimentacao.tipo === "RECEITA"
+                                ? "#16a34a"
+                                : "#ef4444",
+                            fontSize: "12px",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {movimentacao.tipo === "RECEITA" ? (
+                            <ArrowUpRight size={14} strokeWidth={2} />
+                          ) : (
+                            <ArrowDownRight size={14} strokeWidth={2} />
+                          )}
+
+                          {movimentacao.tipo === "RECEITA"
+                            ? "Receita"
+                            : "Despesa"}
+                        </span>
+                      </td>
+
+                      <td
+                        style={{
+                          color:
+                            movimentacao.tipo === "RECEITA"
+                              ? "#16a34a"
+                              : "#ef4444",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {Number(movimentacao.valor_realizado).toLocaleString(
+                          "pt-BR",
+                          {
+                            style: "currency",
+                            currency: "BRL",
+                          },
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
-      </p>
-    </div>
-  </div>
-</div>
-
-        {/* Saldo previsto */}
-
-<div className="dashboard-indicador dashboard-indicador-saldo-previsto">
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "16px",
-    }}
-  >
-    <div
-      style={{
-        width: "56px",
-        height: "56px",
-        borderRadius: "50%",
-        backgroundColor: "#f3e8ff",
-        color: "#9333ea",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-      }}
-    >
-      <Target size={24} strokeWidth={2} />
-    </div>
-
-    <div>
-      <h2>Saldo previsto</h2>
-
-      <p
-        style={{
-          color:
-            dadosDashboard === null
-              ? "#64748b"
-              : Number(dadosDashboard.saldo_previsto) > 0
-                ? "#16a34a"
-                : Number(dadosDashboard.saldo_previsto) < 0
-                  ? "#ef4444"
-                  : "#64748b",
-        }}
-      >
-        {dadosDashboard === null
-          ? "Carregando..."
-          : Number(dadosDashboard.saldo_previsto).toLocaleString(
-              "pt-BR",
-              {
-                style: "currency",
-                currency: "BRL",
-              }
-            )}
-      </p>
-    </div>
-  </div>
-</div>
-      </div>
-
-      {/* Graficos financeiros */}
-<div className="dashboard-visualizacoes">
-      <div className="dashboard-graficos">
-        {/* Grafico de receitas e despesas realizadas */}
-
-        <section className="dashboard-grafico-realizado">
-          <h2>Receitas x Despesas realizadas</h2>
-
-          {dadosDashboard === null ? (
-            <p>Carregando gráfico...</p>
-          ) : (
-            <>
-              <div className="dashboard-grafico-receitas">
-                <span>
-                  Receitas realizadas:{" "}
-                  <strong>
-                    {Number(dadosDashboard.receitas_realizadas).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
-                  </strong>
-                </span>
-
-                <progress
-                  aria-label="Receitas realizadas"
-                  value={Number(dadosDashboard.receitas_realizadas)}
-                  max={Math.max(
-                    1,
-                    Number(dadosDashboard.receitas_realizadas),
-                    Number(dadosDashboard.despesas_realizadas),
-                  )}
-                />
-              </div>
-
-              <div className="dashboard-grafico-despesas">
-                <span>
-                  Despesas realizadas:{" "}
-                  <strong>
-                    {Number(dadosDashboard.despesas_realizadas).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
-                  </strong>
-                </span>
-
-                <progress
-                  aria-label="Despesas realizadas"
-                  value={Number(dadosDashboard.despesas_realizadas)}
-                  max={Math.max(
-                    1,
-                    Number(dadosDashboard.receitas_realizadas),
-                    Number(dadosDashboard.despesas_realizadas),
-                  )}
-                />
-              </div>
-            </>
-          )}
-        </section>
-
-        {/* Grafico de receitas e despesas previstas */}
-
-        <section className="dashboard-grafico-realizado dashboard-grafico-previsto">
-          <h2>Receitas x Despesas previstas</h2>
-
-          {dadosDashboard === null ? (
-            <p>Carregando gráfico...</p>
-          ) : (
-            <>
-              <div className="dashboard-grafico-receitas">
-                <span>
-                  Receitas previstas:{" "}
-                  <strong>
-                    {Number(dadosDashboard.receitas_previstas).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
-                  </strong>
-                </span>
-
-                <progress
-                  aria-label="Receitas previstas"
-                  value={Number(dadosDashboard.receitas_previstas)}
-                  max={Math.max(
-                    1,
-                    Number(dadosDashboard.receitas_previstas),
-                    Number(dadosDashboard.despesas_previstas),
-                  )}
-                />
-              </div>
-
-              <div className="dashboard-grafico-despesas">
-                <span>
-                  Despesas previstas:{" "}
-                  <strong>
-                    {Number(dadosDashboard.despesas_previstas).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
-                  </strong>
-                </span>
-
-                <progress
-                  aria-label="Despesas previstas"
-                  value={Number(dadosDashboard.despesas_previstas)}
-                  max={Math.max(
-                    1,
-                    Number(dadosDashboard.receitas_previstas),
-                    Number(dadosDashboard.despesas_previstas),
-                  )}
-                />
-              </div>
-            </>
-          )}
-        </section>
-      </div>
-      <GraficoDespesas categorias={categoriasDespesas} />
-      </div>
-      <section className="dashboard-ultimas-movimentacoes">
-        <h2>Últimas movimentações</h2>
-
-        {ultimasMovimentacoes.length === 0 ? (
-          <p>Nenhuma movimentação encontrada no período.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Conta</th>
-                <th>Categoria</th>
-                <th>Tipo</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {ultimasMovimentacoes.map((movimentacao) => (
-                <tr key={movimentacao.id}>
-                  <td>
-                    {movimentacao.data_movimentacao
-                      .split("-")
-                      .reverse()
-                      .join("/")}
-                  </td>
-
-                  <td>{movimentacao.conta}</td>
-
-                  <td>{movimentacao.categoria}</td>
-
-                  <td>
-  <span
-    style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: "5px",
-      padding: "5px 9px",
-      borderRadius: "999px",
-      backgroundColor:
-        movimentacao.tipo === "RECEITA"
-          ? "#dcfce7"
-          : "#fee2e2",
-      color:
-        movimentacao.tipo === "RECEITA"
-          ? "#16a34a"
-          : "#ef4444",
-      fontSize: "12px",
-      fontWeight: 600,
-    }}
-  >
-    {movimentacao.tipo === "RECEITA" ? (
-      <ArrowUpRight size={14} strokeWidth={2} />
-    ) : (
-      <ArrowDownRight size={14} strokeWidth={2} />
-    )}
-
-    {movimentacao.tipo === "RECEITA"
-      ? "Receita"
-      : "Despesa"}
-  </span>
-</td>
-
-                  <td
-  style={{
-    color:
-      movimentacao.tipo === "RECEITA"
-        ? "#16a34a"
-        : "#ef4444",
-    fontWeight: 700,
-  }}
->
-  {Number(movimentacao.valor_realizado).toLocaleString(
-    "pt-BR",
-    {
-      style: "currency",
-      currency: "BRL",
-    }
-  )}
-</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </section>
+          </section>
         </>
-)}
+      )}
     </div>
   );
 }
