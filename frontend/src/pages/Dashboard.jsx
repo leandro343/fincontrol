@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  LayoutDashboard,
   TrendingUp,
   TrendingDown,
   Wallet,
@@ -134,10 +135,15 @@ function Dashboard({ onSessaoExpirada }) {
       {/* Cabeçalho e filtros do Dashboard */}
 
       <div className="dashboard-topo">
-        <div className="profile-heading">
-          <h1>Dashboard Financeiro</h1>
+        <div className="profile-heading dashboard-heading-identidade">
+          <span className="dashboard-titulo-icone" aria-hidden="true">
+            <LayoutDashboard size={24} strokeWidth={2} />
+          </span>
 
-          <p>Acompanhe suas receitas, despesas e saldos em um só lugar.</p>
+          <div className="dashboard-heading-textos">
+            <h1>Dashboard Financeiro</h1>
+            <p>Acompanhe suas receitas, despesas e saldos em um só lugar.</p>
+          </div>
         </div>
 
         <div className="dashboard-filtros">

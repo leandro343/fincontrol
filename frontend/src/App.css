@@ -5475,7 +5475,7 @@
 }
 
 /* Detalhe visual abaixo do título */
-.metas-page-title::after {
+/* .metas-page-title::after {
   content: "";
   display: block;
   width: 48px;
@@ -5483,7 +5483,7 @@
   margin-top: 9px;
   background-color: #2563eb;
   border-radius: 10px;
-}
+} */
 
 /* =========================================
    FINCONTROL - IDENTIDADE VISUAL GLOBAL
@@ -5856,4 +5856,682 @@
   gap: 10px;
 
   padding: 12px 24px 24px;
+}
+
+/* ==========================================
+   MVP - REFINAMENTO DOS CARDS DE METAS
+========================================== */
+
+/* Limita a largura do bloco principal */
+.categories-page:has(.metas-lista) .categories-list-card {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* Mantém três colunas, mesmo com apenas uma meta */
+.metas-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px 20px 18px;
+  align-items: start;
+}
+
+/* Cards menores e mais compactos */
+.metas-card {
+  min-width: 0;
+  padding: 17px 18px 14px;
+}
+
+/* Aproxima os elementos do cabeçalho */
+.metas-card-cabecalho {
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Reduz o indicador circular */
+.metas-progresso-circular {
+  width: 70px;
+  height: 70px;
+}
+
+/* Reduz espaços internos */
+.metas-card .metas-valor-objetivo {
+  margin-bottom: 8px;
+}
+
+.metas-card .metas-prazo {
+  margin-top: 5px;
+}
+
+.metas-valor-restante {
+  margin-top: 12px;
+  padding: 10px 0;
+}
+
+/* Botões mais compactos */
+.metas-acoes {
+  margin-top: 4px;
+  padding-top: 10px;
+}
+
+.metas-acoes button {
+  min-height: 34px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+/* Tablets e telas intermediárias */
+@media (max-width: 1280px) {
+  .metas-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Celulares */
+@media (max-width: 740px) {
+  .metas-lista {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px;
+  }
+}
+
+/* ==========================================
+   MVP - AJUSTE DE ALTURA DA TELA DE METAS
+========================================== */
+
+/* reduz a área útil vertical da página */
+.profile-content:has(.metas-lista) {
+  padding: 24px 40px 20px;
+}
+
+/* reduz espaçamento do topo da página */
+.categories-page:has(.metas-lista) .categories-header {
+  margin-bottom: 16px;
+}
+
+.categories-page:has(.metas-lista) .categories-header h1 {
+  margin-bottom: 4px;
+  font-size: 26px;
+}
+
+.categories-page:has(.metas-lista) .categories-header p {
+  font-size: 13px;
+}
+
+/* reduz o cabeçalho do bloco branco */
+.categories-page:has(.metas-lista) .categories-list-header {
+  min-height: auto;
+  padding: 16px 22px;
+}
+
+/* diminui o espaço interno do grid */
+.metas-lista {
+  gap: 12px;
+  padding: 14px 18px 16px;
+}
+
+/* cards mais compactos verticalmente */
+.metas-card {
+  padding: 14px 16px 12px;
+}
+
+/* cabeçalho do card mais enxuto */
+.metas-card-cabecalho {
+  margin-bottom: 8px;
+}
+
+/* círculo um pouco menor */
+.metas-progresso-circular {
+  width: 64px;
+  height: 64px;
+}
+
+.metas-progresso-circular::before {
+  inset: 5px;
+}
+
+.metas-progresso-circular span {
+  font-size: 13px;
+}
+
+/* textos mais compactos */
+.metas-card > p.metas-valor-atual {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.metas-card .metas-valor-numero {
+  font-size: 15px;
+}
+
+.metas-card .metas-valor-objetivo {
+  margin-bottom: 6px;
+}
+
+.metas-card .metas-prazo {
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+/* separador e bloco restante mais compactos */
+.metas-valor-restante {
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+/* ações com menos espaço */
+.metas-acoes {
+  margin-top: 0;
+  padding-top: 8px;
+  gap: 8px;
+}
+
+.metas-acoes button {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* ==========================================
+   MVP - LOGO FINCONTROL
+========================================== */
+
+.sidebar-brand .sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.sidebar-brand .fc-logo-icone {
+  flex-shrink: 0;
+  color: #2563eb;
+}
+
+.sidebar-brand .fc-logo-nome {
+  display: inline-block;
+  line-height: 1.15;
+}
+
+.sidebar-brand .fc-logo-nome span {
+  color: #2563eb;
+}
+
+/* MVP - Cabeçalho sem botão de menu */
+.profile-topbar {
+  justify-content: flex-end;
+}
+
+/* ==========================================
+   MVP - ICONE DO TITULO DE METAS
+========================================== */
+
+.metas-cabecalho-identidade {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.metas-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 48px;
+  height: 48px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+
+  border-radius: 12px;
+}
+
+.metas-cabecalho-identidade > div {
+  min-width: 0;
+}
+
+
+.metas-titulo-icone {
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* MVP - Refinamento do ícone de Metas */
+.metas-titulo-icone {
+  width: 44px;
+  height: 44px;
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: initial;
+}
+
+/* MVP - Ícone do título do Dashboard */
+
+.dashboard-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.dashboard-heading-textos {
+  min-width: 0;
+}
+
+/* MVP - Ícone do título de Contas */
+
+.accounts-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.accounts-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.accounts-heading-textos {
+  min-width: 0;
+}
+
+/* ==========================================
+   MVP - ÍCONE DO TÍTULO DE MOVIMENTAÇÕES
+========================================== */
+
+.transactions-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.transactions-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.transactions-heading-textos {
+  min-width: 0;
+}
+
+/* ==========================================
+   MVP - ÍCONE DO TÍTULO DE CATEGORIAS
+========================================== */
+
+.categories-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.categories-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.categories-heading-textos {
+  min-width: 0;
+}
+
+/* ==========================================
+   MVP - ÍCONE DO TÍTULO DE RELATÓRIOS
+========================================== */
+
+.relatorios-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.relatorios-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.relatorios-heading-textos {
+  min-width: 0;
+}
+
+/* ==========================================
+   MVP - ÍCONE DO TÍTULO DE PERFIL
+========================================== */
+
+.profile-heading-identidade {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-titulo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+
+  background: #e8f0ff;
+  color: #2563eb;
+  border-radius: 12px;
+}
+
+.profile-heading-textos {
+  min-width: 0;
+}
+
+/* ==========================================
+   MVP - IDENTIDADE VISUAL DO LOGIN
+========================================== */
+
+/* Logo com gráfico de crescimento */
+.brand-logo-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-com-icone svg {
+  flex-shrink: 0;
+}
+
+/* Ilustração financeira */
+.auth-growth-chart {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 160px;
+  margin: 24px auto;
+}
+
+/* Barras crescentes */
+.auth-growth-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 15px;
+  padding: 0 42px 8px;
+}
+
+.auth-growth-bars span {
+  flex: 1;
+  max-width: 65px;
+  border-radius: 12px 12px 6px 6px;
+  background: linear-gradient(
+    180deg,
+    #93c5fd,
+    #3b82f6
+  );
+  opacity: 0.85;
+}
+
+.auth-growth-bars span:nth-child(1) {
+  height: 32%;
+}
+
+.auth-growth-bars span:nth-child(2) {
+  height: 45%;
+}
+
+.auth-growth-bars span:nth-child(3) {
+  height: 60%;
+}
+
+.auth-growth-bars span:nth-child(4) {
+  height: 78%;
+}
+
+/* Seta de crescimento */
+.auth-growth-arrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Adaptação para celular */
+@media (max-width: 520px) {
+  .brand-logo-com-icone {
+    gap: 10px;
+  }
+
+  .brand-logo-com-icone svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .auth-growth-chart {
+    height: 115px;
+    margin: 20px auto;
+  }
+}
+
+/* ==========================================
+   MVP - REFINAMENTO DO LAYOUT DE PERFIL
+========================================== */
+
+/* Área principal do Perfil */
+.profile-content:has(> .profile-summary-card) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 30px 32px 40px;
+  box-sizing: border-box;
+}
+
+/* Espaço abaixo do título */
+.profile-content:has(> .profile-summary-card)
+  > .profile-heading {
+  margin-bottom: 20px;
+}
+
+/* Cartão superior: usuário e cadastro */
+.profile-content:has(> .profile-summary-card)
+  > .profile-summary-card {
+  width: 100%;
+  grid-template-columns:
+    minmax(0, 1.5fr) 1px minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Distribuição dos cartões inferiores */
+.profile-content:has(> .profile-summary-card)
+  > .profile-grid {
+  width: 100%;
+  grid-template-columns:
+    minmax(0, 2fr) minmax(310px, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+/* Espaçamento interno dos cartões */
+.profile-content:has(> .profile-summary-card)
+  .profile-card,
+.profile-content:has(> .profile-summary-card)
+  .account-card {
+  padding: 24px 26px;
+  box-sizing: border-box;
+}
+
+/* Títulos dos cartões */
+.profile-content:has(> .profile-summary-card)
+  .profile-card-title {
+  margin-bottom: 18px;
+}
+
+/* Campos do formulário */
+.profile-content:has(> .profile-summary-card)
+  .profile-form-grid {
+  gap: 18px;
+}
+
+/* Botão Salvar Alterações */
+.profile-content:has(> .profile-summary-card)
+  .profile-form-actions {
+  margin-top: 16px;
+}
+
+/* Responsividade */
+@media (max-width: 1100px) {
+  .profile-content:has(> .profile-summary-card)
+    > .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile-content:has(> .profile-summary-card)
+    > .profile-summary-card {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-content:has(> .profile-summary-card)
+    .profile-summary-divider {
+    display: none;
+  }
+
+  .profile-content:has(> .profile-summary-card)
+    .profile-date {
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .profile-content:has(> .profile-summary-card) {
+    padding: 22px 18px 32px;
+  }
+
+  .profile-content:has(> .profile-summary-card)
+    .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   MVP - DETALHES VISUAIS DO PERFIL
+========================================== */
+
+/* Ícone ao lado do e-mail do usuário */
+.profile-user-summary .profile-email-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.profile-email-com-icone svg {
+  flex-shrink: 0;
+  color: #475569;
+}
+
+/* Cabeçalho de Informações Pessoais */
+.profile-card > .profile-card-title {
+  margin: -24px -26px 18px;
+  padding: 20px 26px 16px;
+  border-bottom: 1px solid #dbe4f0;
+}
+
+/* Título e subtítulo */
+.profile-card-title-textos {
+  min-width: 0;
+}
+
+.profile-card-title-textos h2 {
+  margin: 0;
+}
+
+.profile-card-title-textos p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+/* Ícones nos rótulos dos campos */
+.profile-form .profile-label-com-icone {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.profile-label-com-icone svg {
+  flex-shrink: 0;
+  color: #172554;
+}
+
+/* Ícones nos botões */
+.save-profile-button,
+.delete-account-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+/* MVP - Menu lateral com contraste equilibrado */
+.sidebar .sidebar-item:not(.sidebar-item-active) {
+  color: #475569;
+  font-weight: 500;
 }

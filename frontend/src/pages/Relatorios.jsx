@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ChartColumnIncreasing,
   TrendingUp,
   TrendingDown,
   Wallet,
@@ -110,13 +111,19 @@ function Relatorios() {
   }
   return (
     <div className="relatorios-page">
-      <div className="profile-heading">
-        <h1>Relatórios Financeiros</h1>
+      <div className="profile-heading relatorios-heading-identidade">
+        <span className="relatorios-titulo-icone" aria-hidden="true">
+          <ChartColumnIncreasing size={24} strokeWidth={2} />
+        </span>
 
-        <p>
-          Consulte suas movimentações, analise receitas, despesas e resultados
-          financeiros por período.
-        </p>
+        <div className="relatorios-heading-textos">
+          <h1>Relatórios Financeiros</h1>
+
+          <p>
+            Consulte suas movimentações, analise receitas, despesas e resultados
+            financeiros por período.
+          </p>
+        </div>
       </div>
 
       <div className="dashboard-filtros">
@@ -346,38 +353,40 @@ function Relatorios() {
                       <td>{categoria.categoria}</td>
 
                       <td
-  style={{
-    color:
-      Number(categoria.total_receitas) > 0
-        ? "#16a34a"
-        : "#64748b",
-    fontWeight: 700,
-  }}
->
-  {Number(
-    categoria.total_receitas
-  ).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })}
-</td>
+                        style={{
+                          color:
+                            Number(categoria.total_receitas) > 0
+                              ? "#16a34a"
+                              : "#64748b",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {Number(categoria.total_receitas).toLocaleString(
+                          "pt-BR",
+                          {
+                            style: "currency",
+                            currency: "BRL",
+                          },
+                        )}
+                      </td>
 
                       <td
-  style={{
-    color:
-      Number(categoria.total_despesas) > 0
-        ? "#ef4444"
-        : "#64748b",
-    fontWeight: 700,
-  }}
->
-  {Number(
-    categoria.total_despesas
-  ).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })}
-</td>
+                        style={{
+                          color:
+                            Number(categoria.total_despesas) > 0
+                              ? "#ef4444"
+                              : "#64748b",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {Number(categoria.total_despesas).toLocaleString(
+                          "pt-BR",
+                          {
+                            style: "currency",
+                            currency: "BRL",
+                          },
+                        )}
+                      </td>
 
                       <td
                         style={{

@@ -1,7 +1,87 @@
 import { useEffect, useState } from "react";
 import ModalConfirmacao from "../components/ModalConfirmacao";
 import Notificacao from "../components/Notificacao";
+import {
+  Gamepad2,
+  Monitor,
+  Bell,
+  Layers3,
+  Laptop,
+  Target,
+  BookOpen,
+  Car,
+  House,
+  Plane,
+  Smartphone,
+  Bike,
+  GraduationCap,
+  HeartPulse,
+  Shirt,
+  Wallet,
+  Gift,
+  PiggyBank,
+  BriefcaseBusiness,
+  Dumbbell,
+  ShoppingBag,
+  Utensils,
+  PawPrint,
+  Camera,
+  Headphones,
+  Sofa,
+  Wrench,
+  CreditCard,
+} from "lucide-react";
 
+function obterIconeMeta(nomeMeta) {
+  const nome = String(nomeMeta || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  const palavras = nome.split(/[^a-z0-9]+/).filter(Boolean);
+
+  const catalogo = [
+    { termos: ["notebook", "laptop"], icone: Laptop },
+    { termos: ["game", "games", "jogo", "jogos", "videogame", "console", "ps5", "xbox"], icone: Gamepad2 },
+    { termos: ["notificacao", "notificacoes", "alerta", "lembrete"], icone: Bell },
+    { termos: ["pc", "computador", "desktop", "monitor"], icone: Monitor },
+    { termos: ["caderno", "cadernos", "livro", "livros", "material escolar"], icone: BookOpen },
+    { termos: ["carro", "carros", "veiculo", "automovel"], icone: Car },
+    { termos: ["casa", "apartamento", "imovel", "moradia", "aluguel"], icone: House },
+    { termos: ["viagem", "viajar", "ferias", "passagem", "aviao"], icone: Plane },
+    { termos: ["celular", "iphone", "smartphone", "telefone"], icone: Smartphone },
+    { termos: ["bicicleta", "bike", "ciclismo"], icone: Bike },
+    { termos: ["faculdade", "curso", "cursos", "escola", "estudos", "formatura"], icone: GraduationCap },
+    { termos: ["saude", "medico", "hospital", "tratamento"], icone: HeartPulse },
+    { termos: ["roupa", "roupas", "camisa", "tenis", "vestido"], icone: Shirt },
+    { termos: ["poupanca", "reserva", "economizar", "investimento", "investir"], icone: PiggyBank },
+    { termos: ["presente", "aniversario", "natal"], icone: Gift },
+    { termos: ["trabalho", "empresa", "negocio", "empreender"], icone: BriefcaseBusiness },
+    { termos: ["academia", "musculacao", "treino", "fitness"], icone: Dumbbell },
+    { termos: ["compras", "supermercado", "shopping"], icone: ShoppingBag },
+    { termos: ["comida", "restaurante", "alimentacao", "jantar"], icone: Utensils },
+    { termos: ["cachorro", "gato", "pet", "animal"], icone: PawPrint },
+    { termos: ["camera", "fotografia", "fotografica"], icone: Camera },
+    { termos: ["fone", "fones", "headset", "audio"], icone: Headphones },
+    { termos: ["sofa", "moveis", "mobilia"], icone: Sofa },
+    { termos: ["reforma", "conserto", "manutencao"], icone: Wrench },
+    { termos: ["cartao", "fatura", "divida", "parcelamento"], icone: CreditCard },
+    { termos: ["salario", "dinheiro", "renda"], icone: Wallet },
+    { termos: ["metas"], icone: Layers3 },
+  ];
+
+  const resultado = catalogo.find(({ termos }) =>
+    termos.some((termo) =>
+      termo.includes(" ")
+        ? nome.includes(termo)
+        : palavras.includes(termo)
+    )
+  );
+
+  const Icone = resultado?.icone || Target;
+
+  return <Icone size={20} strokeWidth={2} />;
+}
 function Metas({ onSessaoExpirada }) {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [nome, setNome] = useState("");
@@ -212,11 +292,26 @@ function Metas({ onSessaoExpirada }) {
   return (
     <div className="categories-page">
       <div className="categories-header">
-        <div>
-          <h1 className="metas-page-title">Metas Financeiras</h1>
+       
+<div className="metas-cabecalho-identidade">
+  <span className="metas-titulo-icone" aria-hidden="true">
+   
+<span role="img" aria-label="Meta financeira">
+ 
+<span className="metas-titulo-icone" aria-hidden="true">
+  <Target size={24} strokeWidth={2} />
+</span>
 
-          <p>Cadastre e acompanhe seus objetivos financeiros.</p>
-        </div>
+</span>
+
+  </span>
+
+  <div>
+   <h1>Metas Financeiras</h1>
+
+    <p>Cadastre e acompanhe seus objetivos financeiros.</p>
+  </div>
+</div>
 
         <button
           type="button"
@@ -274,38 +369,27 @@ function Metas({ onSessaoExpirada }) {
                   className={`metas-card metas-card--cor-${Number(meta.id) % 3}`}
                   key={meta.id}
                 >
-                  <div className="metas-card-cabecalho">
-                    <span className="metas-card-icone" aria-hidden="true">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="20"
-                        height="20"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="12" r="9" />
-                        <circle cx="12" cy="12" r="5" />
-                        <circle cx="12" cy="12" r="1.5" />
-                      </svg>
-                    </span>
+                  
+<div className="metas-card-cabecalho">
+  <span className="metas-card-icone" aria-hidden="true">
+    {obterIconeMeta(meta.nome)}
+  </span>
 
-                    <h3>{meta.nome}</h3>
-                    <span
-                      className="metas-progresso-circular"
-                      style={{
-                        "--meta-progresso": `${Math.min(
-                          Math.max(percentual, 0),
-                          100,
-                        )}%`,
-                      }}
-                      aria-hidden="true"
-                    >
-                      <span>{percentual}%</span>
-                    </span>
-                  </div>
+  <h3>{meta.nome}</h3>
+
+  <span
+    className="metas-progresso-circular"
+    style={{
+      "--meta-progresso": `${Math.min(
+        Math.max(percentual, 0),
+        100,
+      )}%`,
+    }}
+    aria-hidden="true"
+  >
+    <span>{percentual}%</span>
+  </span>
+</div>
 
                   <p className="metas-valor-atual">
                     <span className="metas-valor-rotulo">Valor acumulado</span>{" "}

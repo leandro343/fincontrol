@@ -294,11 +294,16 @@ function Contas() {
   return (
     <div className="accounts-page">
       <div className="categories-header">
-        <div>
-          <h1>Contas</h1>
-          <p>Gerencie suas receitas e despesas planejadas.</p>
-        </div>
+        <div className="accounts-heading-identidade">
+          <span className="accounts-titulo-icone" aria-hidden="true">
+            <WalletCards size={24} strokeWidth={2} />
+          </span>
 
+          <div className="accounts-heading-textos">
+            <h1>Contas</h1>
+            <p>Gerencie suas receitas e despesas planejadas.</p>
+          </div>
+        </div>
         <button
           type="button"
           className="categories-new-button"

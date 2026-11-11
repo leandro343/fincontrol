@@ -324,9 +324,15 @@ function Movimentacoes() {
   return (
     <div className="transactions-page">
       <div className="categories-header">
-        <div>
-          <h1>Movimentações</h1>
-          <p>Registre e acompanhe suas movimentações financeiras.</p>
+        <div className="transactions-heading-identidade">
+          <span className="transactions-titulo-icone" aria-hidden="true">
+            <ArrowRightLeft size={24} strokeWidth={2} />
+          </span>
+
+          <div className="transactions-heading-textos">
+            <h1>Movimentações</h1>
+            <p>Registre e acompanhe suas movimentações financeiras.</p>
+          </div>
         </div>
 
         <button

@@ -16,6 +16,12 @@ import {
   UserRound,
   LogOut,
   Menu,
+  CalendarDays,
+  Info,
+  CircleAlert,
+  Mail,
+  Save,
+  Trash2,
 } from "lucide-react";
 
 function App() {
@@ -255,12 +261,18 @@ function App() {
           <aside className="sidebar">
             <div className="sidebar-brand">
               <div className="sidebar-logo">
-                Fin<span>Control</span>
+                <ChartNoAxesCombined
+                  className="fc-logo-icone"
+                  size={27}
+                  strokeWidth={2.3}
+                  aria-hidden="true"
+                />
+
+                <div className="fc-logo-nome">
+                  Fin<span>Control</span>
+                </div>
               </div>
-
-              <p className="sidebar-brand-subtitle">Controle Financeiro</p>
             </div>
-
             <nav className="sidebar-nav">
               <div className="sidebar-section">
                 <span className="sidebar-section-title">Visão Geral</span>
@@ -283,7 +295,16 @@ function App() {
 
               <div className="sidebar-section">
                 <span className="sidebar-section-title">Finanças</span>
-
+                <button
+                  type="button"
+                  className={`sidebar-item ${
+                    paginaAtual === "categorias" ? "sidebar-item-active" : ""
+                  }`}
+                  onClick={() => setPaginaAtual("categorias")}
+                >
+                  <Tags className="sidebar-icon" size={19} strokeWidth={1.8} />
+                  <span>Categorias</span>
+                </button>
                 <button
                   type="button"
                   className={`sidebar-item ${
@@ -312,17 +333,6 @@ function App() {
                     strokeWidth={1.8}
                   />
                   <span>Movimentações</span>
-                </button>
-
-                <button
-                  type="button"
-                  className={`sidebar-item ${
-                    paginaAtual === "categorias" ? "sidebar-item-active" : ""
-                  }`}
-                  onClick={() => setPaginaAtual("categorias")}
-                >
-                  <Tags className="sidebar-icon" size={19} strokeWidth={1.8} />
-                  <span>Categorias</span>
                 </button>
 
                 <button
@@ -390,10 +400,6 @@ function App() {
 
           <main className="profile-main">
             <header className="profile-topbar">
-              <button type="button" className="menu-button" aria-label="Menu">
-                <Menu size={22} strokeWidth={2} />
-              </button>
-
               <div className="topbar-user">
                 <div className="topbar-avatar">
                   {usuario.nome ? usuario.nome.charAt(0).toUpperCase() : "U"}
@@ -418,10 +424,17 @@ function App() {
                 <Metas onSessaoExpirada={handleSessaoExpirada} />
               ) : (
                 <>
-                  <div className="profile-heading">
-                    <h1>Meu Perfil</h1>
+                  <div className="profile-heading profile-heading-identidade">
+                    <span className="profile-titulo-icone" aria-hidden="true">
+                      <UserRound size={24} strokeWidth={2} />
+                    </span>
 
-                    <p>Gerencie suas informações pessoais e dados da conta.</p>
+                    <div className="profile-heading-textos">
+                      <h1>Meu Perfil</h1>
+                      <p>
+                        Gerencie suas informações pessoais e dados da conta.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="profile-summary-card">
@@ -435,14 +448,19 @@ function App() {
                       <div>
                         <h2>{usuario.nome}</h2>
 
-                        <p>{usuario.email}</p>
+                        <p className="profile-email-com-icone">
+                          <Mail size={17} strokeWidth={2} aria-hidden="true" />
+                          {usuario.email}
+                        </p>
                       </div>
                     </div>
 
                     <div className="profile-summary-divider" />
 
                     <div className="profile-date">
-                      <span className="summary-icon">▣</span>
+                      <span className="summary-icon" aria-hidden="true">
+                        <CalendarDays size={22} strokeWidth={2} />
+                      </span>
 
                       <p>Data de Cadastro</p>
 
@@ -453,9 +471,14 @@ function App() {
                   <div className="profile-grid">
                     <section className="profile-card">
                       <div className="profile-card-title">
-                        <span className="card-title-icon">○</span>
+                        <span className="card-title-icon" aria-hidden="true">
+                          <Info size={20} strokeWidth={2} />
+                        </span>
 
-                        <h2>Informações Pessoais</h2>
+                        <div className="profile-card-title-textos">
+                          <h2>Informações Pessoais</h2>
+                          <p>Confira e atualize seus dados, se necessário.</p>
+                        </div>
                       </div>
 
                       <form
@@ -464,7 +487,17 @@ function App() {
                       >
                         <div className="profile-form-grid">
                           <div className="form-group">
-                            <label htmlFor="nomeEdicao">Nome Completo</label>
+                            <label
+                              htmlFor="nomeEdicao"
+                              className="profile-label-com-icone"
+                            >
+                              <UserRound
+                                size={17}
+                                strokeWidth={2}
+                                aria-hidden="true"
+                              />
+                              Nome Completo
+                            </label>
 
                             <input
                               type="text"
@@ -477,7 +510,17 @@ function App() {
                           </div>
 
                           <div className="form-group">
-                            <label htmlFor="emailEdicao">E-mail</label>
+                            <label
+                              htmlFor="emailEdicao"
+                              className="profile-label-com-icone"
+                            >
+                              <Mail
+                                size={17}
+                                strokeWidth={2}
+                                aria-hidden="true"
+                              />
+                              E-mail
+                            </label>
 
                             <input
                               type="email"
@@ -496,6 +539,11 @@ function App() {
 
                         <div className="profile-form-actions">
                           <button type="submit" className="save-profile-button">
+                            <Save
+                              size={17}
+                              strokeWidth={2}
+                              aria-hidden="true"
+                            />
                             Salvar Alterações
                           </button>
                         </div>
@@ -504,7 +552,9 @@ function App() {
 
                     <section className="account-card">
                       <div className="profile-card-title">
-                        <span className="danger-title-icon">!</span>
+                        <span className="danger-title-icon" aria-hidden="true">
+                          <CircleAlert size={20} strokeWidth={2} />
+                        </span>
 
                         <h2>Conta</h2>
                       </div>
@@ -519,6 +569,7 @@ function App() {
                         className="delete-account-button"
                         onClick={handleExcluirConta}
                       >
+                        <Trash2 size={18} strokeWidth={2} aria-hidden="true" />
                         Excluir conta
                       </button>
                     </section>
@@ -533,7 +584,14 @@ function App() {
           <div className="auth-wrapper">
             <div className="auth-brand-panel">
               <div>
-                <h1 className="brand-logo">FinControl</h1>
+                <h1 className="brand-logo brand-logo-com-icone">
+                  <ChartNoAxesCombined
+                    size={38}
+                    strokeWidth={2.4}
+                    aria-hidden="true"
+                  />
+                  <span>FinControl</span>
+                </h1>
 
                 <h2 className="brand-title">Comece agora sua jornada.</h2>
 
@@ -541,6 +599,38 @@ function App() {
                   Crie sua conta e tenha mais controle sobre suas finanças de
                   forma simples e segura.
                 </p>
+              </div>
+
+              {/* Gráfico de crescimento financeiro */}
+              <div className="auth-growth-chart" aria-hidden="true">
+                <div className="auth-growth-bars">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+
+                <svg
+                  className="auth-growth-arrow"
+                  viewBox="0 0 360 180"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 24 157 C 100 145, 155 115, 220 91 S 312 46, 330 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M 310 27 L 332 20 L 328 43"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
 
               <p className="brand-footer">
@@ -623,7 +713,14 @@ function App() {
           <div className="auth-wrapper">
             <div className="auth-brand-panel">
               <div>
-                <h1 className="brand-logo">FinControl</h1>
+                <h1 className="brand-logo brand-logo-com-icone">
+                  <ChartNoAxesCombined
+                    size={38}
+                    strokeWidth={2.4}
+                    aria-hidden="true"
+                  />
+                  <span>FinControl</span>
+                </h1>
 
                 <h2 className="brand-title">
                   Mais controle para suas finanças.
@@ -633,6 +730,38 @@ function App() {
                   Organize, acompanhe e tome melhores decisões para sua vida
                   financeira.
                 </p>
+              </div>
+
+              {/* Gráfico de crescimento financeiro */}
+              <div className="auth-growth-chart" aria-hidden="true">
+                <div className="auth-growth-bars">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+
+                <svg
+                  className="auth-growth-arrow"
+                  viewBox="0 0 360 180"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 24 157 C 100 145, 155 115, 220 91 S 312 46, 330 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M 310 27 L 332 20 L 328 43"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
 
               <p className="brand-footer">
