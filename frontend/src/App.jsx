@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import Categorias from "./pages/Categorias";
 import Contas from "./pages/Contas";
@@ -28,12 +28,87 @@ function App() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [usuario, setUsuario] = useState(null);
+  const [verificandoSessao, setVerificandoSessao] = useState(
+    Boolean(localStorage.getItem("token")),
+  );
   const [telaCadastro, setTelaCadastro] = useState(false);
   const [nome, setNome] = useState("");
   const [nomeEdicao, setNomeEdicao] = useState("");
   const [emailEdicao, setEmailEdicao] = useState("");
   const [mensagem, setMensagem] = useState("");
-  const [paginaAtual, setPaginaAtual] = useState("perfil");
+  const [paginaAtual, setPaginaAtual] = useState(() => {
+    return sessionStorage.getItem("fincontrol_pagina") || "perfil";
+  });
+
+useEffect(() => {
+  if (usuario) {
+    sessionStorage.setItem("fincontrol_pagina", paginaAtual);
+  }
+}, [usuario, paginaAtual]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
+    let ativo = true;
+
+    async function restaurarSessao() {
+      try {
+        // Lê o identificador do usuário no token JWT.
+        const partePayload = token.split(".")[1];
+
+        const payload = JSON.parse(
+          atob(partePayload.replace(/-/g, "+").replace(/_/g, "/")),
+        );
+
+        if (!payload.id) {
+          throw new Error("Token sem identificador.");
+        }
+
+        // O backend verifica se o token é válido.
+        const resposta = await fetch(
+          `http://localhost:3000/api/usuarios/${payload.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (resposta.status === 401 || resposta.status === 403) {
+          localStorage.removeItem("token");
+          return;
+        }
+
+        if (!resposta.ok) {
+          throw new Error("Não foi possível recuperar o perfil.");
+        }
+
+        const perfil = await resposta.json();
+
+        if (ativo) {
+          setUsuario(perfil);
+          setNomeEdicao(perfil.nome);
+          setEmailEdicao(perfil.email);
+        }
+      } catch (erro) {
+        console.error("Erro ao restaurar sessão:", erro);
+      } finally {
+        if (ativo) {
+          setVerificandoSessao(false);
+        }
+      }
+    }
+
+    restaurarSessao();
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
 
   function formatarData(data) {
     if (!data) {
@@ -234,17 +309,19 @@ function App() {
       setMensagem("Não foi possível excluir a conta.");
     }
   }
+  
+const handleLogout = useCallback(() => {
+  localStorage.removeItem("token");
+  sessionStorage.removeItem("fincontrol_pagina");
 
-  const handleLogout = useCallback(() => {
-    localStorage.removeItem("token");
-
-    setUsuario(null);
-    setEmail("");
-    setSenha("");
-    setNomeEdicao("");
-    setEmailEdicao("");
-    setMensagem("");
-  }, []);
+  setUsuario(null);
+  setPaginaAtual("perfil");
+  setEmail("");
+  setSenha("");
+  setNomeEdicao("");
+  setEmailEdicao("");
+  setMensagem("");
+}, []);
 
   const handleSessaoExpirada = useCallback(() => {
     handleLogout();
@@ -256,7 +333,21 @@ function App() {
 
   return (
     <>
-      {usuario ? (
+      {verificandoSessao ? (
+        <div
+          role="status"
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#475569",
+            fontSize: "16px",
+          }}
+        >
+          Verificando sua sessão...
+        </div>
+      ) : usuario ? (
         <div className="profile-page">
           <aside className="sidebar">
             <div className="sidebar-brand">

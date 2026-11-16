@@ -42,40 +42,93 @@ function obterIconeMeta(nomeMeta) {
 
   const catalogo = [
     { termos: ["notebook", "laptop"], icone: Laptop },
-    { termos: ["game", "games", "jogo", "jogos", "videogame", "console", "ps5", "xbox"], icone: Gamepad2 },
-    { termos: ["notificacao", "notificacoes", "alerta", "lembrete"], icone: Bell },
+    {
+      termos: [
+        "game",
+        "games",
+        "jogo",
+        "jogos",
+        "videogame",
+        "console",
+        "ps5",
+        "xbox",
+      ],
+      icone: Gamepad2,
+    },
+    {
+      termos: ["notificacao", "notificacoes", "alerta", "lembrete"],
+      icone: Bell,
+    },
     { termos: ["pc", "computador", "desktop", "monitor"], icone: Monitor },
-    { termos: ["caderno", "cadernos", "livro", "livros", "material escolar"], icone: BookOpen },
+    {
+      termos: ["caderno", "cadernos", "livro", "livros", "material escolar"],
+      icone: BookOpen,
+    },
     { termos: ["carro", "carros", "veiculo", "automovel"], icone: Car },
-    { termos: ["casa", "apartamento", "imovel", "moradia", "aluguel"], icone: House },
-    { termos: ["viagem", "viajar", "ferias", "passagem", "aviao"], icone: Plane },
-    { termos: ["celular", "iphone", "smartphone", "telefone"], icone: Smartphone },
+    {
+      termos: ["casa", "apartamento", "imovel", "moradia", "aluguel"],
+      icone: House,
+    },
+    {
+      termos: ["viagem", "viajar", "ferias", "passagem", "aviao"],
+      icone: Plane,
+    },
+    {
+      termos: ["celular", "iphone", "smartphone", "telefone"],
+      icone: Smartphone,
+    },
     { termos: ["bicicleta", "bike", "ciclismo"], icone: Bike },
-    { termos: ["faculdade", "curso", "cursos", "escola", "estudos", "formatura"], icone: GraduationCap },
-    { termos: ["saude", "medico", "hospital", "tratamento"], icone: HeartPulse },
+    {
+      termos: [
+        "faculdade",
+        "curso",
+        "cursos",
+        "escola",
+        "estudos",
+        "formatura",
+      ],
+      icone: GraduationCap,
+    },
+    {
+      termos: ["saude", "medico", "hospital", "tratamento"],
+      icone: HeartPulse,
+    },
     { termos: ["roupa", "roupas", "camisa", "tenis", "vestido"], icone: Shirt },
-    { termos: ["poupanca", "reserva", "economizar", "investimento", "investir"], icone: PiggyBank },
+    {
+      termos: ["poupanca", "reserva", "economizar", "investimento", "investir"],
+      icone: PiggyBank,
+    },
     { termos: ["presente", "aniversario", "natal"], icone: Gift },
-    { termos: ["trabalho", "empresa", "negocio", "empreender"], icone: BriefcaseBusiness },
-    { termos: ["academia", "musculacao", "treino", "fitness"], icone: Dumbbell },
+    {
+      termos: ["trabalho", "empresa", "negocio", "empreender"],
+      icone: BriefcaseBusiness,
+    },
+    {
+      termos: ["academia", "musculacao", "treino", "fitness"],
+      icone: Dumbbell,
+    },
     { termos: ["compras", "supermercado", "shopping"], icone: ShoppingBag },
-    { termos: ["comida", "restaurante", "alimentacao", "jantar"], icone: Utensils },
+    {
+      termos: ["comida", "restaurante", "alimentacao", "jantar"],
+      icone: Utensils,
+    },
     { termos: ["cachorro", "gato", "pet", "animal"], icone: PawPrint },
     { termos: ["camera", "fotografia", "fotografica"], icone: Camera },
     { termos: ["fone", "fones", "headset", "audio"], icone: Headphones },
     { termos: ["sofa", "moveis", "mobilia"], icone: Sofa },
     { termos: ["reforma", "conserto", "manutencao"], icone: Wrench },
-    { termos: ["cartao", "fatura", "divida", "parcelamento"], icone: CreditCard },
+    {
+      termos: ["cartao", "fatura", "divida", "parcelamento"],
+      icone: CreditCard,
+    },
     { termos: ["salario", "dinheiro", "renda"], icone: Wallet },
     { termos: ["metas"], icone: Layers3 },
   ];
 
   const resultado = catalogo.find(({ termos }) =>
     termos.some((termo) =>
-      termo.includes(" ")
-        ? nome.includes(termo)
-        : palavras.includes(termo)
-    )
+      termo.includes(" ") ? nome.includes(termo) : palavras.includes(termo),
+    ),
   );
 
   const Icone = resultado?.icone || Target;
@@ -86,7 +139,7 @@ function Metas({ onSessaoExpirada }) {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [nome, setNome] = useState("");
   const [valorObjetivo, setValorObjetivo] = useState("");
-  const [valorAtual, setValorAtual] = useState("0");
+  const [valorAtual, setValorAtual] = useState("");
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
   const [metas, setMetas] = useState([]);
@@ -102,7 +155,7 @@ function Metas({ onSessaoExpirada }) {
 
     setNome("");
     setValorObjetivo("");
-    setValorAtual("0");
+    setValorAtual("");
     setDataInicio("");
     setDataFim("");
 
@@ -274,7 +327,7 @@ function Metas({ onSessaoExpirada }) {
 
       setNome("");
       setValorObjetivo("");
-      setValorAtual("0");
+      setValorAtual("");
       setDataInicio("");
       setDataFim("");
       setMetaEmEdicao(null);
@@ -292,26 +345,21 @@ function Metas({ onSessaoExpirada }) {
   return (
     <div className="categories-page">
       <div className="categories-header">
-       
-<div className="metas-cabecalho-identidade">
-  <span className="metas-titulo-icone" aria-hidden="true">
-   
-<span role="img" aria-label="Meta financeira">
- 
-<span className="metas-titulo-icone" aria-hidden="true">
-  <Target size={24} strokeWidth={2} />
-</span>
+        <div className="metas-cabecalho-identidade">
+          <span className="metas-titulo-icone" aria-hidden="true">
+            <span role="img" aria-label="Meta financeira">
+              <span className="metas-titulo-icone" aria-hidden="true">
+                <Target size={24} strokeWidth={2} />
+              </span>
+            </span>
+          </span>
 
-</span>
+          <div>
+            <h1>Metas Financeiras</h1>
 
-  </span>
-
-  <div>
-   <h1>Metas Financeiras</h1>
-
-    <p>Cadastre e acompanhe seus objetivos financeiros.</p>
-  </div>
-</div>
+            <p>Cadastre e acompanhe seus objetivos financeiros.</p>
+          </div>
+        </div>
 
         <button
           type="button"
@@ -369,30 +417,29 @@ function Metas({ onSessaoExpirada }) {
                   className={`metas-card metas-card--cor-${Number(meta.id) % 3}`}
                   key={meta.id}
                 >
-                  
-<div className="metas-card-cabecalho">
-  <span className="metas-card-icone" aria-hidden="true">
-    {obterIconeMeta(meta.nome)}
-  </span>
+                  <div className="metas-card-cabecalho">
+                    <span className="metas-card-icone" aria-hidden="true">
+                      {obterIconeMeta(meta.nome)}
+                    </span>
 
-  <h3>{meta.nome}</h3>
+                    <h3>{meta.nome}</h3>
 
-  <span
-    className="metas-progresso-circular"
-    style={{
-      "--meta-progresso": `${Math.min(
-        Math.max(percentual, 0),
-        100,
-      )}%`,
-    }}
-    aria-hidden="true"
-  >
-    <span>{percentual}%</span>
-  </span>
-</div>
+                    <span
+                      className="metas-progresso-circular"
+                      style={{
+                        "--meta-progresso": `${Math.min(
+                          Math.max(percentual, 0),
+                          100,
+                        )}%`,
+                      }}
+                      aria-hidden="true"
+                    >
+                      <span>{percentual}%</span>
+                    </span>
+                  </div>
 
                   <p className="metas-valor-atual">
-                    <span className="metas-valor-rotulo">Valor acumulado</span>{" "}
+                    <span className="metas-valor-rotulo">Valor guardado</span>{" "}
                     <strong className="metas-valor-numero">
                       {atual.toLocaleString("pt-BR", {
                         style: "currency",
@@ -594,7 +641,7 @@ function Metas({ onSessaoExpirada }) {
 
                 <div className="categories-form-group">
                   <label htmlFor="valorAtualMeta">
-                    Valor Atual
+                    Valor Guardado
                     <span className="required-mark">*</span>
                   </label>
 
